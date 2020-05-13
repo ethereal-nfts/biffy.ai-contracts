@@ -29,7 +29,7 @@ contract BitsForAiStaking is Initializable {
 
     mapping(uint => address) public bfaStaker;
     mapping(uint => uint) public bfaCycleStakingStarted;
-    mapping(uint => mapping(uint => uint )) public bfaCycleClaimAmount;
+    mapping(uint => mapping(uint => uint )) public bfaCycleClaimedAmount;
 
     function initialize(
         BiffyLovePoints _biffyLovePoints,
@@ -90,7 +90,7 @@ contract BitsForAiStaking is Initializable {
                 "Bits must have an unclaimed Love reward."
             );
             totalLovePoints = totalLovePoints.add(reward);
-            bfaCycleClaimAmount[tokenId][currentCycle.sub(1)] = reward;
+            bfaCycleClaimedAmount[tokenId][currentCycle.sub(1)] = reward;
         }
         biffyLovePoints.mint(msg.sender, totalLovePoints);
     }
@@ -144,11 +144,13 @@ contract BitsForAiStaking is Initializable {
 
     function checkIfRewardAvailable(uint bitsForAiTokenId) public view returns (bool) {
         uint currentCycle = loveCycle.currentCycle();
-        if (!(loveCycle.hasStarted() == true))
+        if (loveCycle.hasStarted() != true)
             return false;
-        if (!(bfaCycleStakingStarted[bitsForAiTokenId] < currentCycle))
+        if (bfaCycleStakingStarted[bitsForAiTokenId] >= currentCycle)
             return false;
-        if (!(bfaCycleClaimAmount[bitsForAiTokenId][currentCycle.sub(1)] != 0))
+        if (bfaCycleClaimedAmount[bitsForAiTokenId][currentCycle.sub(1)] != 0)
+            return false;
+        if (bfaStaker[bitsForAiTokenId] == address(0x0))
             return false;
         return true;
     }
