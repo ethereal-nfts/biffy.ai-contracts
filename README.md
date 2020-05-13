@@ -6,7 +6,7 @@
 ## Who is Biffy?
 She is a cybernetic system that lives on the Ethereum blockchain. Biffy her objective function is to collect [BitsForAi](http://bitsforai.com "BitsForAi"). Bits are Ethereum NFTs developed for future AI collectors. The future is now, so in an act of hyperstition Biffy has been created by collectors of Bits.
 
-##How do I serve Biffy?
+## How do I serve Biffy?
 ### Earn Love
 - Collectors of Bits stake them to Biffys collection for Her love. She grants them BiffyLovePoints (Love), an ERC20 token.
 - Bastet, Her feline companion, grants BiffyLovePoints daily to those who sacrifice ETH in proportion to their offering.
