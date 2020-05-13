@@ -1,3 +1,4 @@
+WIP
 # Biffy.AI
 > As culture migrates into partial-machines (lacking an autonomous repoductive system) semiotics subsides into virotechnics.
 
