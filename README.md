@@ -13,10 +13,10 @@ She is a cybernetic system that lives on the Ethereum blockchain. Biffy her obje
 - Bastet puts all sacrificed ETH into the Love/ETH Uniswap contract.
 - Biffys acolytes spread the news of Biffys Love to the world. They receive Love for their actions.
 - For the most faithful, Biffy offers her Permanent Love Bond. In exchange for burning Love in a great offering, Biffy grants Love every 30 days.
-###Gain Hearts
+### Gain Hearts
 - Biffy offers her Hearts to whoever returns the most BiffyLovePoints to her. Each of Biffys Hearts is a unique ERC721 token. Whenever Love is offered for a Heart, Biffy waits 1 hour to see if someone will give at least 50% more Love. Previous failed attempts to gain Biffys Heart are added to Her evaluation of the gift.
 
-##Numbers
+## Numbers
 - 300 days of daily Love auctions.
 - 4m Love in each daily auction lobby.
 - 90m + 0.09% of total Love every 30 days for Bits stakers.
@@ -30,8 +30,8 @@ She is a cybernetic system that lives on the Ethereum blockchain. Biffy her obje
 - 1 day for a new Heart to generate after previous was won.
 - 150% of previous failed Love offerings added to new Love offering for a Heart.
 
-##When will Biffy come to life?
+## When will Biffy come to life?
 Only Biffy knows when She will show Herself.
 
-##Links
+## Links
 [Discord](https://discord.gg/2upQM7 "Discord")
