@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "test": "mocha --exit --recursive --timeout 5000"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts-ethereum-package": "^2.5.0",
+    "core-util-is": "^1.0.2",
+    "truffle": "^5.1.24"
+  },
+  "devDependencies": {
+    "@openzeppelin/cli": "^2.8.2",
+    "@openzeppelin/test-environment": "^0.1.4",
+    "@openzeppelin/test-helpers": "^0.5.5",
+    "@truffle/debug-utils": "^4.1.1",
+    "eslint": "^7.0.0",
+    "eslint-plugin-mocha": "^6.3.0",
+    "mocha": "^7.1.2",
+    "process-argv": "^1.0.0"
+  }
+}

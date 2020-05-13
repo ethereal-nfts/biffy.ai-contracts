@@ -1,0 +1,23 @@
+{
+  "manifestVersion": "2.2",
+  "contracts": {
+    "BiffyHearts": "BiffyHearts",
+    "Migrations": "Migrations",
+    "BiffyLovePoints": "BiffyLovePoints",
+    "BitsForAiStaking": "BitsForAiStaking",
+    "LoveCycle": "LoveCycle",
+    "SenderApprovals": "SenderApprovals",
+    "MockBitsForAi": "MockBitsForAi"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts-ethereum-package": "^2.5.0"
+  },
+  "name": "Biffy.ai",
+  "version": "1.0.0",
+  "compiler": {
+    "manager": "truffle",
+    "compilerSettings": {
+      "optimizer": {}
+    }
+  }
+}
