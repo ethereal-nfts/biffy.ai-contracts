@@ -11,6 +11,6 @@ contract SenderApprovals {
     }
 
     function isApprovedOrSelf(address spender) public view returns (bool) {
-        return (tx.origin == spender && (msg.sender == spender || operatorApprovals[spender][msg.sender]));
+        return (msg.sender == spender || (tx.origin == spender && operatorApprovals[spender][msg.sender]));
     }
 }
