@@ -270,5 +270,23 @@ describe("BitsForAiStaking",function() {
         expect(stakingRewardPerBits.toString()).to.equal(config.InitializationBitsForAiStaking.rewardBase.div(new BN(2)).toString())
       })
     })
+    describe("#checkIfRewardAvailable",function() {
+      it("should return false for token that was never staked.", async function () {
+        let isRewardAvailable = await this.bitsForAiStaking.checkIfRewardAvailable(15)
+        expect(isRewardAvailable).to.equal(false)
+      })
+      it("should return false for token that was unstaked.", async function () {
+        let isRewardAvailable = await this.bitsForAiStaking.checkIfRewardAvailable(2)
+        expect(isRewardAvailable).to.equal(false)
+      })
+      it("should return false for token that was restaked.", async function () {
+        let isRewardAvailable = await this.bitsForAiStaking.checkIfRewardAvailable(6)
+        expect(isRewardAvailable).to.equal(false)
+      })
+      it("should return true for token that was staked and has not been claimed.", async function () {
+        let isRewardAvailable = await this.bitsForAiStaking.checkIfRewardAvailable(0)
+        expect(isRewardAvailable).to.equal(true)
+      })
+    })
   })
 })
