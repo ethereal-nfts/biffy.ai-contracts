@@ -106,113 +106,45 @@ describe("BitsForAiStaking",function() {
       })
     })
     describe("#stakeForBiffysCollection",function() {
-      it("should revert from unapproved address", async function () {
-        await expectRevert(
-          this.bitsForAiStaking.stakeForBiffysCollection(
-            stakers[0],[0,1,2],{from: unauthorizerOperator}
-          ),
-          "Staker must be sender or approved operator."
-        )
-      })
       it("should revert with an unowned token id", async function () {
         await expectRevert(
-          this.bitsForAiStaking.stakeForBiffysCollection(
-            stakers[0],[16],{from: stakers[0]}
-          ),
-          "Bits not owned by requested staker."
+          this.bitsForAiStaking.stakeForBiffysCollection([16],{from: stakers[0]}),
+          "Bits not owned by sender."
         )
       })
       it("should revert with any unowned token ids", async function () {
         await expectRevert(
-          this.bitsForAiStaking.stakeForBiffysCollection(
-            stakers[0],[0,1,2,3],{from: stakers[0]}
-          ),
-          "Bits not owned by requested staker."
+          this.bitsForAiStaking.stakeForBiffysCollection([0,1,2,3],{from: stakers[0]}),
+          "Bits not owned by sender."
         )
       })
       it("should succeed when owned token ids sent from staker", async function () {
-        await this.bitsForAiStaking.stakeForBiffysCollection(
-          stakers[0],[0,1,2],{from: stakers[0]})
-      })
-      it("should revert from operator approved by diferent account.", async function () {
-        await this.bitsForAiStaking.setOperatorApproval(approvedOperator,true,{from:stakers[1]})
-        await expectRevert(
-          this.bitsForAiStaking.stakeForBiffysCollection(
-            stakers[0],[0,1,2,6],{from: approvedOperator}
-          ),
-          "Staker must be sender or approved operator."
-        )
-      })
-      it("should succeed when owned token ids sent from approved operator.", async function () {
-        await this.bitsForAiStaking.setOperatorApproval(approvedOperator,true,{from:stakers[0]})
-        await this.bitsForAiStaking.stakeForBiffysCollection(
-          stakers[0],[0,1,2,6],{from: approvedOperator})
-      })
-      it("should revert when owned token ids sent from recently unapproved operator.", async function () {
-        await this.bitsForAiStaking.setOperatorApproval(approvedOperator,false,{from:stakers[0]})
-        await expectRevert(
-          this.bitsForAiStaking.stakeForBiffysCollection(
-            stakers[0],[0,1,2,6],{from: approvedOperator}
-          ),
-          "Staker must be sender or approved operator."
-        )
+        await this.bitsForAiStaking.stakeForBiffysCollection([0,1,2,6],{from: stakers[0]})
       })
     })
     describe("#claimBiffysLove",function() {
       it("should revert when no Bits by anyone are staked in last cycle.", async function () {
         await expectRevert(
-          this.bitsForAiStaking.claimBiffysLove(
-            stakers[0],[0,1,2],{from: stakers[0]}
-          ),
+          this.bitsForAiStaking.claimBiffysLove([0,1,2],{from: stakers[0]}),
           "Must have at least 1 Bits eligible to calculate rewards."
         )
       })
-      it("should revert from unapproved address", async function () {
-        await expectRevert(
-          this.bitsForAiStaking.claimBiffysLove(
-            stakers[0],[0,1,2],{from: unauthorizerOperator}
-          ),
-          "Staker must be sender or approved operator."
-        )
-      })
-      /*it("should revert with an unowned token id", async ()=>{
-        await expectRevert(
-          this.bitsForAiStaking.claimBiffysLove(
-            stakers[0],[16],{from: stakers[0]}
-          ),
-          "Bits not owned by requested staker."
-        )
-      })
-      it("should revert when no reward available to claim", async ()=>{
-        await expectRevert(
-          this.bitsForAiStaking.claimBiffysLove(
-            stakers[0],[0,1,2],{from: stakers[0]}
-          ),
-          "Bits must have an unclaimed Love reward."
-        )
-      })*/
     })
     describe("#unstake",function() {
-      it("should revert from unapproved operator", async function () {
-        await expectRevert(
-          this.bitsForAiStaking.unstake(stakers[0],[[1]],{from:unauthorizerOperator}),
-          "Staker must be sender or approved operator."
-        )
-      })
       it("should revert if any are not owned", async function () {
         await expectRevert(
-          this.bitsForAiStaking.unstake(stakers[0],[[1,14]],{from:stakers[0]}),
-          "You can only unstake your own staked Bits."
+          this.bitsForAiStaking.unstake([[1,14]],{from:stakers[0]}),
+          "Sender can only unstake own staked Bits."
         )
       })
       it("should revert if any are not staked", async function () {
         await expectRevert(
-          this.bitsForAiStaking.unstake(stakers[0],[[1,17]],{from:stakers[0]}),
-          "You can only unstake your own staked Bits."
+          this.bitsForAiStaking.unstake([[1,17]],{from:stakers[0]}),
+          "Sender can only unstake own staked Bits."
         )
       })
       it("should successfully unstake owned Bits current staked", async function () {
-        await this.bitsForAiStaking.unstake(stakers[0],[1],{from:stakers[0]})
+        await this.bitsForAiStaking.unstake([1],{from:stakers[0]})
       })
     })
     describe("#stakingPoolSize",function() {
@@ -295,14 +227,14 @@ describe("BitsForAiStaking",function() {
     })
     describe("#stakeForBiffysCollection",function() {
       it("should increase totalStakingNew by one and leave totalstaking unchanged when adding new token", async function () {
-        await this.bitsForAiStaking.stakeForBiffysCollection(stakers[1],[3],{from:stakers[1]})
+        await this.bitsForAiStaking.stakeForBiffysCollection([3],{from:stakers[1]})
         let totalStaking = (await this.bitsForAiStaking.totalStaking()).toNumber()
         expect(totalStaking).to.equal(2)
         let totalStakingNew = (await this.bitsForAiStaking.totalStakingNew()).toNumber()
         expect(totalStakingNew).to.equal(1)
       })
       it("should not change totalStakingNew and leave totalstaking unchanged when restaking newly staked token", async function () {
-        await this.bitsForAiStaking.stakeForBiffysCollection(stakers[1],[3],{from:stakers[1]})
+        await this.bitsForAiStaking.stakeForBiffysCollection([3],{from:stakers[1]})
         let totalStaking = (await this.bitsForAiStaking.totalStaking()).toNumber()
         expect(totalStaking).to.equal(2)
         let totalStakingNew = (await this.bitsForAiStaking.totalStakingNew()).toNumber()
@@ -311,21 +243,21 @@ describe("BitsForAiStaking",function() {
       it("should increment totalStakingNew and reduce totalstaking by one when restaking old staked token", async function () {
         let cycleStarted = (await this.bitsForAiStaking.bfaCycleStakingStarted(6)).toNumber()
         expect(cycleStarted).to.equal(0)
-        await this.bitsForAiStaking.stakeForBiffysCollection(stakers[0],[6],{from:stakers[0]})
+        await this.bitsForAiStaking.stakeForBiffysCollection([6],{from:stakers[0]})
         let totalStaking = (await this.bitsForAiStaking.totalStaking()).toNumber()
         expect(totalStaking).to.equal(1)
         let totalStakingNew = (await this.bitsForAiStaking.totalStakingNew()).toNumber()
         expect(totalStakingNew).to.equal(2)
       })
       it("should increment totalStakingNew and leave totalstaking unchanged by one when staking new tokens", async function () {
-        await this.bitsForAiStaking.stakeForBiffysCollection(stakers[2],[4,8,11,14],{from:stakers[2]})
+        await this.bitsForAiStaking.stakeForBiffysCollection([4,8,11,14],{from:stakers[2]})
         let totalStaking = (await this.bitsForAiStaking.totalStaking()).toNumber()
         expect(totalStaking).to.equal(1)
         let totalStakingNew = (await this.bitsForAiStaking.totalStakingNew()).toNumber()
         expect(totalStakingNew).to.equal(6)
       })
       it("should allow staking unstaked token from unstakedTransferred", async function () {
-        await this.bitsForAiStaking.stakeForBiffysCollection(stakers[1],[2],{from:stakers[1]})
+        await this.bitsForAiStaking.stakeForBiffysCollection([2],{from:stakers[1]})
         let totalStaking = (await this.bitsForAiStaking.totalStaking()).toNumber()
         expect(totalStaking).to.equal(1)
         let totalStakingNew = (await this.bitsForAiStaking.totalStakingNew()).toNumber()

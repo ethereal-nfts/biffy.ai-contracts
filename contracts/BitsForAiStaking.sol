@@ -3,7 +3,6 @@ pragma solidity 0.5.17;
 import "./BiffyLovePoints.sol";
 import "./LoveCycle.sol";
 import "./library/BasisPoints.sol";
-import "./SenderApprovals.sol";
 
 import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/ERC20Mintable.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC721/IERC721.sol";
@@ -11,7 +10,7 @@ import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
 import "@openzeppelin/upgrades/contracts/Initializable.sol";
 
 
-contract BitsForAiStaking is Initializable, SenderApprovals {
+contract BitsForAiStaking is Initializable {
     using BasisPoints for uint;
     using SafeMath for uint;
 
@@ -53,14 +52,13 @@ contract BitsForAiStaking is Initializable, SenderApprovals {
     //She may display your Bits anywhere She wishes.
     //She cannot sell or gift your Bits and you can unstake them at any time.
     //In return, She will give you Her Love.
-    function stakeForBiffysCollection(address staker, uint[] memory bitsForAiTokenIds) public {
+    function stakeForBiffysCollection(uint[] memory bitsForAiTokenIds) public {
         updateTotalStakingPreviousCycles();
-        require(isApprovedOrSelf(staker), "Staker must be sender or approved operator.");
         uint currentCycle = loveCycle.currentCycle();
         bool hasStarted = loveCycle.hasStarted();
         for (uint i = 0; i < bitsForAiTokenIds.length; i++) {
             uint tokenId = bitsForAiTokenIds[i];
-            require(bitsForAi.ownerOf(tokenId) == staker, "Bits not owned by requested staker.");
+            require(bitsForAi.ownerOf(tokenId) == msg.sender, "Bits not owned by sender.");
             if (bfaStaker[tokenId] == address(0x0)) {
                 //new stake
                 totalStakingNew = totalStakingNew.add(1);
@@ -72,21 +70,20 @@ contract BitsForAiStaking is Initializable, SenderApprovals {
                 //new stake being restaked.
                 //do nothing
             //}
-            bfaStaker[tokenId] = staker;
+            bfaStaker[tokenId] = msg.sender;
             bfaCycleStakingStarted[tokenId] = currentCycle;
         }
     }
 
-    function claimBiffysLove(address staker, uint[] memory bitsForAiTokenIds) public {
-        require(isApprovedOrSelf(staker), "Staker must be sender or approved operator.");
+    function claimBiffysLove(uint[] memory bitsForAiTokenIds) public {
         uint reward = stakingRewardPerBits();
         uint totalLovePoints = 0;
         uint currentCycle = loveCycle.currentCycle();
         for (uint i = 0; i < bitsForAiTokenIds.length; i++) {
             uint tokenId = bitsForAiTokenIds[i];
             require(
-                bfaStaker[tokenId] == staker,
-                "Bits not owned by requested staker."
+                bfaStaker[tokenId] == msg.sender,
+                "Bits not owned by requested sender."
             );
             require(
                 checkIfRewardAvailable(tokenId),
@@ -95,20 +92,19 @@ contract BitsForAiStaking is Initializable, SenderApprovals {
             totalLovePoints = totalLovePoints.add(reward);
             bfaCycleClaimAmount[tokenId][currentCycle.sub(1)] = reward;
         }
-        biffyLovePoints.mint(staker, totalLovePoints);
+        biffyLovePoints.mint(msg.sender, totalLovePoints);
     }
 
     //Unstake your Bits, forfeiting any earned Love.
-    function unstake(address staker, uint[] memory bitsForAiTokenIds) public {
+    function unstake(uint[] memory bitsForAiTokenIds) public {
         updateTotalStakingPreviousCycles();
-        require(isApprovedOrSelf(staker), "Staker must be sender or approved operator.");
         uint currentCycle = loveCycle.currentCycle();
         bool hasStarted = loveCycle.hasStarted();
         for (uint i = 0; i < bitsForAiTokenIds.length; i++) {
             uint tokenId = bitsForAiTokenIds[i];
             require(
-                bfaStaker[tokenId] == staker,
-                "You can only unstake your own staked Bits."
+                bfaStaker[tokenId] == msg.sender,
+                "Sender can only unstake own staked Bits."
             );
             if (bfaCycleStakingStarted[tokenId] < currentCycle && hasStarted) {
                 //old stake being unstaked.
