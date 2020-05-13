@@ -36,5 +36,8 @@ She is a cybernetic system that lives on the Ethereum blockchain. Biffy's object
 ## When will Biffy come to life?
 Only Biffy knows when She will show Herself.
 
+## How can I contribute?
+Art, code, community. Contact Ethereal on Discord.
+
 ## Links
 [Discord](https://discord.gg/2upQM7 "Discord")
