@@ -26,6 +26,7 @@ contract BitsForAiStaking is Initializable {
     uint public totalStakingNew;
     uint public totalStaking;
     uint public lastStakingUpdate; //last cycle totalStakingPreviousCycles was updated.
+    uint public totalBlpForRewardCalc;
 
     mapping(uint => address) public bfaStaker;
     mapping(uint => uint) public bfaCycleStakingStarted;
@@ -83,7 +84,7 @@ contract BitsForAiStaking is Initializable {
             uint tokenId = bitsForAiTokenIds[i];
             require(
                 bfaStaker[tokenId] == msg.sender,
-                "Bits not owned by requested sender."
+                "Bits not staked by sender."
             );
             require(
                 checkIfRewardAvailable(tokenId),
@@ -120,7 +121,7 @@ contract BitsForAiStaking is Initializable {
 
     function stakingPoolSize() public view returns (uint) {
         return rewardBase.add(
-            biffyLovePoints.totalSupply().mulBP(rewardBpOfTotalBlp)
+            totalBlpForRewardCalc.mulBP(rewardBpOfTotalBlp)
         );
     }
 
@@ -140,6 +141,7 @@ contract BitsForAiStaking is Initializable {
         totalStakingShares = totalStaking;
         lastStakingUpdate = currentCycle;
         totalStakingNew = 0;
+        totalBlpForRewardCalc = biffyLovePoints.totalSupply();
     }
 
     function checkIfRewardAvailable(uint bitsForAiTokenId) public view returns (bool) {
