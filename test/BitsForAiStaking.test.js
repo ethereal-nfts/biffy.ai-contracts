@@ -271,21 +271,47 @@ describe("BitsForAiStaking",function() {
       })
     })
     describe("#checkIfRewardAvailable",function() {
-      it("should return false for token that was never staked.", async function () {
+      it("should return false for token that was never staked", async function () {
         let isRewardAvailable = await this.bitsForAiStaking.checkIfRewardAvailable(15)
         expect(isRewardAvailable).to.equal(false)
       })
-      it("should return false for token that was unstaked.", async function () {
+      it("should return false for token that was unstaked", async function () {
         let isRewardAvailable = await this.bitsForAiStaking.checkIfRewardAvailable(2)
         expect(isRewardAvailable).to.equal(false)
       })
-      it("should return false for token that was restaked.", async function () {
+      it("should return false for token that was restaked", async function () {
         let isRewardAvailable = await this.bitsForAiStaking.checkIfRewardAvailable(6)
         expect(isRewardAvailable).to.equal(false)
       })
-      it("should return true for token that was staked and has not been claimed.", async function () {
+      it("should return true for token that was staked and has not been claimed", async function () {
         let isRewardAvailable = await this.bitsForAiStaking.checkIfRewardAvailable(0)
         expect(isRewardAvailable).to.equal(true)
+      })
+    })
+    describe("#claimBiffysLove",function() {
+      it("should revert when claiming newly staked token", async function () {
+        await expectRevert(
+          this.bitsForAiStaking.claimBiffysLove([6],{from: stakers[0]}),
+          "Bits must have an unclaimed Love reward."
+        )
+      })
+      it("should revert for staked token not owned by sender", async function () {
+        await expectRevert(
+          this.bitsForAiStaking.claimBiffysLove([3],{from: stakers[0]}),
+          "Bits not staked by sender."
+        )
+      })
+      it("should increase stakers account by stakingRewardPerBits", async function () {
+        await this.bitsForAiStaking.claimBiffysLove([0],{from: stakers[0]})
+        let stakingRewardPerBits = await this.bitsForAiStaking.stakingRewardPerBits()
+        let blpHeld = await this.biffyLovePoints.balanceOf(stakers[0])
+        expect(blpHeld.toString()).to.equal(stakingRewardPerBits.toString())
+      })
+      it("should revert once staking reward is claimed.", async function () {
+        await expectRevert(
+          this.bitsForAiStaking.claimBiffysLove([0],{from: stakers[0]}),
+          "Bits must have an unclaimed Love reward."
+        )
       })
     })
   })
