@@ -77,6 +77,7 @@ contract BitsForAiStaking is Initializable {
     }
 
     function claimBiffysLove(uint[] memory bitsForAiTokenIds) public {
+        updateTotalStakingPreviousCycles();
         uint reward = stakingRewardPerBits();
         uint totalLovePoints = 0;
         uint currentCycle = loveCycle.currentCycle();
