@@ -315,4 +315,63 @@ describe("BitsForAiStaking",function() {
       })
     })
   })
+  describe("State: Cycle 17, day 5",function() {
+    before(async function () {
+      await this.bitsForAiStaking.stakeForBiffysCollection([5,9,12,15],{from:stakers[3]})
+      let latest = await time.latest()
+      await time.increase(
+        this.startTime - latest + SECONDS_PER_DAY*(16*30 + 5) + 1
+      )
+      await time.advanceBlock()
+      await this.bitsForAiStaking.updateTotalStakingPreviousCycles()
+    })
+    it("should be cycle 17", async function () {
+      let currentCycle = (await this.loveCycle.currentCycle()).toNumber()
+      expect(currentCycle).to.equal(17)
+    })
+    describe("#totalStakingNew",function() {
+      it("should be 0", async function () {
+        let totalStakingNew = (await this.bitsForAiStaking.totalStakingNew()).toNumber()
+        expect(totalStakingNew).to.equal(0)
+      })
+    })
+    describe("#totalStaking",function() {
+      it("should be 12", async function () {
+        let totalStaking = (await this.bitsForAiStaking.totalStaking()).toNumber()
+        expect(totalStaking).to.equal(12)
+      })
+    })
+    describe("#totalStakingShares",function() {
+      it("should be 12", async function () {
+        let totalStakingShares = (await this.bitsForAiStaking.totalStakingShares()).toNumber()
+        expect(totalStakingShares).to.equal(12)
+      })
+    })
+    describe("#stakingPoolSize",function() {
+      it("should be rewardBase + totalBlp*(rewardBP)", async function () {
+        let stakingPoolSize = (await this.bitsForAiStaking.stakingPoolSize()).toString()
+        let totalBlp = await this.biffyLovePoints.totalSupply()
+        let rewardFromBlp = totalBlp.mul(new BN(config.InitializationBitsForAiStaking.rewardBpOfTotalBlp)).div(new BN(10000))
+        expect(stakingPoolSize).to.equal(rewardFromBlp.add(config.InitializationBitsForAiStaking.rewardBase).toString())
+      })
+    })
+    describe("#stakingRewardPerBits",function() {
+      it("should be stakingPoolSize/totalShares * (.75)", async function () {
+        let stakingPoolSize = await this.bitsForAiStaking.stakingPoolSize()
+        let totalShares = await this.bitsForAiStaking.totalStakingShares()
+        let stakingRewardPerBits = await this.bitsForAiStaking.stakingRewardPerBits()
+        expect(stakingRewardPerBits.toString())
+          .to.equal(stakingPoolSize.div(totalShares).mul(new BN(3)).div(new BN(4)).toString())
+      })
+    })
+    describe("#claimBiffysLove",function() {
+      it("should increase stakers[3] by 4*stakingRewardPerBits", async function () {
+        let stakingRewardPerBits = await this.bitsForAiStaking.stakingRewardPerBits()
+        await this.bitsForAiStaking.claimBiffysLove([5,9,12,15],{from:stakers[3]})
+        let stakersBlp = await this.biffyLovePoints.balanceOf(stakers[3])
+        expect(stakersBlp.toString())
+          .to.equal(stakingRewardPerBits.mul(new BN(4)).toString())
+      })
+    })
+  })
 })
