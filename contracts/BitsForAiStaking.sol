@@ -132,7 +132,7 @@ contract BitsForAiStaking is Initializable {
         uint daysSinceCycleStart = loveCycle.daysSinceCycleStart();
         if (daysSinceCycleStart == 0) return base;
         if (daysSinceCycleStart >= 20) return 0;
-        return base.mulBP(rewardDecayBP.mul(daysSinceCycleStart));
+        return base.sub(base.mulBP(rewardDecayBP.mul(daysSinceCycleStart)));
     }
 
     function updateTotalStakingPreviousCycles() public {
