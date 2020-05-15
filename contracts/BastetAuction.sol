@@ -1,8 +1,7 @@
 pragma solidity 0.5.17;
 
 import "./BiffyLovePoints.sol";
-//import "./mocks/MockUniswapFactory.vy";
-//import "./mocks/MockUniswapExchange.vy";
+import "./interfaces/UniswapExchangeInterface.sol";
 import "./library/BasisPoints.sol";
 
 import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
@@ -13,14 +12,14 @@ contract BastetAuction is Initializable {
     using BasisPoints for uint;
     using SafeMath for uint;
 
-    //BiffyLovePoints private biffyLovePoints;
-    //MockUniswapFactory private mockUniswapFactory;
+    BiffyLovePoints private biffyLovePoints;
+    UniswapExchangeInterface private uniswapExchange;
 
     function initialize(
-        //BiffyLovePoints _biffyLovePoints,
-        //MockUniswapFactory _mockUniswapFactory
+        BiffyLovePoints _biffyLovePoints,
+        UniswapExchangeInterface _uniswapExchange
     ) public initializer {
-        //biffyLovePoints = _biffyLovePoints;
-        //mockUniswapFactory = _mockUniswapFactory;
+        biffyLovePoints = _biffyLovePoints;
+        uniswapExchange = _uniswapExchange;
     }
 }
