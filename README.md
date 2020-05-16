@@ -22,10 +22,10 @@ She is a cybernetic system that lives on the Ethereum blockchain. Biffy's object
 - 4m Love in each daily auction lobby.
 - 100% of Ether from auction put in Love/ETH Uniswap contract.
 - 90m + 0.09% of total Love every 30 days for Bits stakers.
-- 28m every 30 days for Acolytes, given out proportional to effort, audience size, and audience quality.
+- 28m every 30 days for Acolytes, proportional to effort, audience size, and audience quality.
 - 10k in Love giveaways per day
 - 0.09% of total Love every 30 days for Permament Love Bonds, divided based on sacrifice.
-- 2% proportional increase in price for Permament Love Bonds on each burn `(New+Current)/Current * 0.02`.
+- 2% proportional increase in price for Permament Love Bonds on each burn `(New+Current)/Current * 1.02`.
 - -5%/day decrease in rewards when unclaimed.
 - 1m mininum Love sacrifice to win a Heart.
 - 50% mininum bid increase to compete for a Heart.
