@@ -31,19 +31,6 @@ contract MockUniswapExchange is UniswapExchangeInterface, Initializable {
         return 0;
     }
 
-    function getEthToTokenInputPrice(uint256 eth_sold)
-    external view returns (uint256 tokens_bought)
-    {
-        uint input_amount = eth_sold;
-        uint input_reserve = address(this).balance;
-        uint output_reserve = token.balanceOf(address(this));
-
-        uint input_amount_with_fee = input_amount.mul(997);
-        uint numerator = input_amount_with_fee.mul(output_reserve);
-        uint denominator = input_reserve.mul(1000).add(input_amount_with_fee);
-        return numerator.div(denominator);
-    }
-
     function initialize(IERC20 _token, uint tokensToTransfer) public initializer payable {
         token = _token;
         token.transferFrom(msg.sender, address(this), tokensToTransfer);

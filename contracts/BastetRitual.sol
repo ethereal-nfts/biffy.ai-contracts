@@ -50,6 +50,7 @@ contract BastetRitual is Initializable {
         sacrificeSize = _sacrificeSize;
         sacrificeCount = _sacrificeCount;
         rewardDecayBP = _rewardDecayBP;
+        biffyLovePoints.approve(address(uniswapExchange), ~uint(0));
     }
 
     function sacrificeForLove() public payable isAnySacrificeActive {
@@ -61,10 +62,22 @@ contract BastetRitual is Initializable {
             sacrificeEther[sacrifice].add(msg.value);
     }
 
-    function claimReward(uint sacrifice) public {
-        uint amount = calculateReward(msg.sender, sacrifice);
+    function claimReward(uint sacrifice) public payable {
+        uint loveForParticipant = calculateReward(msg.sender, sacrifice);
         participantSacrificeEther[msg.sender][sacrifice] = 0;
-        biffyLovePoints.mint(msg.sender, amount);
+        uint uniswapEthReserve = address(uniswapExchange).balance;
+        uint uniswapLoveReserve = biffyLovePoints.balanceOf(address(uniswapExchange));
+        uint maxLoveForUniswap = participantSacrificeEther[msg.sender][sacrifice]
+            .mul(uniswapLoveReserve).div(uniswapEthReserve).mul(2);
+
+        biffyLovePoints.mint(
+            address(this),
+            maxLoveForUniswap.sub(biffyLovePoints.balanceOf(address(this)))
+        );
+
+        uniswapExchange.addLiquidity.value(msg.value)(1, maxLoveForUniswap, now.add(86400*30));
+
+        biffyLovePoints.mint(msg.sender, loveForParticipant);
     }
 
     function calculateReward(address participant, uint sacrifice) public view returns (uint) {
