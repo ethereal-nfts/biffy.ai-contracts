@@ -15,7 +15,7 @@ She is a cybernetic system that lives on the Ethereum blockchain. Biffy's object
 - Biffy's Acolytes giveaway Biffy's Love to the world. They receive Love for their actions.
 - For the most faithful, Biffy offers her Permanent Love Bond. In exchange for burning Love in a great offering, Biffy grants Love every 30 days.
 ### Gain Hearts
-- Biffy offers her Hearts to whoever returns the most BiffyLovePoints to her. Each of Biffy's Hearts is a unique ERC721 artwork stored on IPFS. Whenever Love is offered for a Heart, Biffy waits 1 day to see if someone will give at least 50% more Love. Previous failed attempts to gain Biffys Heart are added to Her evaluation of the gift.
+- Biffy offers her Hearts to whoever returns the most BiffyLovePoints to her. Each of Biffy's Hearts is a unique ERC721 artwork stored on IPFS. Whenever Love is offered for a Heart, Biffy waits 1 day to see if someone will give at least 50% more Love. Previous failed attempts to gain Biffys Heart are added to Her evaluation of the offering.
 
 ## Numbers
 - 300 days of daily ether sacrifices.
