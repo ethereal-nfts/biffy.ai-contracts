@@ -53,7 +53,7 @@ describe("BitsForAiStaking",function() {
       })(),
       (async () => {
         this.bitsForAi = await BitsForAi.new()
-        await this.bitsForAi.initialize("BitsForAi", "BFA", [ethereal], [ethereal])
+        await this.bitsForAi.initialize("BitsForAi", "bits", [ethereal], [ethereal])
         await Promise.all(
           bitsForAiTokenIdMocks.map(
             tokenMock => this.bitsForAi.mintWithTokenURI(tokenMock[0],tokenMock[1],"",{from: ethereal})
@@ -76,7 +76,7 @@ describe("BitsForAiStaking",function() {
       this.bitsForAi.address,
       this.loveCycle.address,
       p.rewardBase,
-      p.rewardBpOfTotalBlp,
+      p.rewardBpOfTotalLove,
       p.rewardDecayBP,
       {from: ethereal}
     )
@@ -148,7 +148,7 @@ describe("BitsForAiStaking",function() {
       })
     })
     describe("#stakingPoolSize",function() {
-      it("should be rewardBase ("+config.InitializationBitsForAiStaking.rewardBase.toString()+") when no BLP minted", async function () {
+      it("should be rewardBase ("+config.InitializationBitsForAiStaking.rewardBase.toString()+") when no Love minted", async function () {
         let stakingPoolSize = await this.bitsForAiStaking.stakingPoolSize()
         expect(stakingPoolSize.toString()).to.equal(config.InitializationBitsForAiStaking.rewardBase.toString())
 
@@ -241,7 +241,7 @@ describe("BitsForAiStaking",function() {
         expect(totalStakingNew).to.equal(1)
       })
       it("should increment totalStakingNew and reduce totalstaking by one when restaking old staked token", async function () {
-        let cycleStarted = (await this.bitsForAiStaking.bfaCycleStakingStarted(6)).toNumber()
+        let cycleStarted = (await this.bitsForAiStaking.bitsCycleStakingStarted(6)).toNumber()
         expect(cycleStarted).to.equal(0)
         await this.bitsForAiStaking.stakeForBiffysCollection([6],{from:stakers[0]})
         let totalStaking = (await this.bitsForAiStaking.totalStaking()).toNumber()
@@ -265,7 +265,7 @@ describe("BitsForAiStaking",function() {
       })
     })
     describe("#stakingRewardPerBits",function() {
-      it("should return rewardBase/2 when 2 bit shares staked and no BLP issued.", async function () {
+      it("should return rewardBase/2 when 2 bit shares staked and no Love issued.", async function () {
         let stakingRewardPerBits = await this.bitsForAiStaking.stakingRewardPerBits()
         expect(stakingRewardPerBits.toString()).to.equal(config.InitializationBitsForAiStaking.rewardBase.div(new BN(2)).toString())
       })
@@ -304,8 +304,8 @@ describe("BitsForAiStaking",function() {
       it("should increase stakers account by stakingRewardPerBits", async function () {
         await this.bitsForAiStaking.claimBiffysLove([0],{from: stakers[0]})
         let stakingRewardPerBits = await this.bitsForAiStaking.stakingRewardPerBits()
-        let blpHeld = await this.biffyLovePoints.balanceOf(stakers[0])
-        expect(blpHeld.toString()).to.equal(stakingRewardPerBits.toString())
+        let LoveHeld = await this.biffyLovePoints.balanceOf(stakers[0])
+        expect(LoveHeld.toString()).to.equal(stakingRewardPerBits.toString())
       })
       it("should revert once staking reward is claimed.", async function () {
         await expectRevert(
@@ -348,11 +348,11 @@ describe("BitsForAiStaking",function() {
       })
     })
     describe("#stakingPoolSize",function() {
-      it("should be rewardBase + totalBlp*(rewardBP)", async function () {
+      it("should be rewardBase + totalLove*(rewardBP)", async function () {
         let stakingPoolSize = (await this.bitsForAiStaking.stakingPoolSize()).toString()
-        let totalBlp = await this.biffyLovePoints.totalSupply()
-        let rewardFromBlp = totalBlp.mul(new BN(config.InitializationBitsForAiStaking.rewardBpOfTotalBlp)).div(new BN(10000))
-        expect(stakingPoolSize).to.equal(rewardFromBlp.add(config.InitializationBitsForAiStaking.rewardBase).toString())
+        let totalLove = await this.biffyLovePoints.totalSupply()
+        let rewardFromLove = totalLove.mul(new BN(config.InitializationBitsForAiStaking.rewardBpOfTotalLove)).div(new BN(10000))
+        expect(stakingPoolSize).to.equal(rewardFromLove.add(config.InitializationBitsForAiStaking.rewardBase).toString())
       })
     })
     describe("#stakingRewardPerBits",function() {
@@ -368,8 +368,8 @@ describe("BitsForAiStaking",function() {
       it("should increase stakers[3] by 4*stakingRewardPerBits", async function () {
         let stakingRewardPerBits = await this.bitsForAiStaking.stakingRewardPerBits()
         await this.bitsForAiStaking.claimBiffysLove([5,9,12,15],{from:stakers[3]})
-        let stakersBlp = await this.biffyLovePoints.balanceOf(stakers[3])
-        expect(stakersBlp.toString())
+        let stakersLove = await this.biffyLovePoints.balanceOf(stakers[3])
+        expect(stakersLove.toString())
           .to.equal(stakingRewardPerBits.mul(new BN(4)).toString())
       })
     })
