@@ -19,32 +19,32 @@ contract BitsForAiStaking is Initializable {
     LoveCycle private loveCycle;
 
     uint private rewardBase;
-    uint private rewardBpOfTotalBlp;
+    uint private rewardBpOfTotalLove;
     uint private rewardDecayBP;
 
     uint public totalStakingShares;
     uint public totalStakingNew;
     uint public totalStaking;
     uint public lastStakingUpdate; //last cycle totalStakingPreviousCycles was updated.
-    uint public totalBlpForRewardCalc;
+    uint public totalLoveForRewardCalc;
 
-    mapping(uint => address) public bfaStaker;
-    mapping(uint => uint) public bfaCycleStakingStarted;
-    mapping(uint => mapping(uint => uint )) public bfaCycleClaimedAmount;
+    mapping(uint => address) public bitsStaker;
+    mapping(uint => uint) public bitsCycleStakingStarted;
+    mapping(uint => mapping(uint => uint )) public bitsCycleClaimedAmount;
 
     function initialize(
         BiffyLovePoints _biffyLovePoints,
         IERC721 _bitsForAi,
         LoveCycle _loveCycle,
         uint _rewardBase,
-        uint _rewardBpOfTotalBlp,
+        uint _rewardBpOfTotalLove,
         uint _rewardDecayBP
     ) public initializer {
         biffyLovePoints = _biffyLovePoints;
         bitsForAi = _bitsForAi;
         loveCycle = _loveCycle;
         rewardBase = _rewardBase;
-        rewardBpOfTotalBlp = _rewardBpOfTotalBlp;
+        rewardBpOfTotalLove = _rewardBpOfTotalLove;
         rewardDecayBP = _rewardDecayBP;
     }
 
@@ -60,10 +60,10 @@ contract BitsForAiStaking is Initializable {
         for (uint i = 0; i < bitsForAiTokenIds.length; i++) {
             uint tokenId = bitsForAiTokenIds[i];
             require(bitsForAi.ownerOf(tokenId) == msg.sender, "Bits not owned by sender.");
-            if (bfaStaker[tokenId] == address(0x0)) {
+            if (bitsStaker[tokenId] == address(0x0)) {
                 //new stake
                 totalStakingNew = totalStakingNew.add(1);
-            } else if (bfaCycleStakingStarted[tokenId] < currentCycle && hasStarted) {
+            } else if (bitsCycleStakingStarted[tokenId] < currentCycle && hasStarted) {
                 //old stake being restaked.
                 totalStakingNew = totalStakingNew.add(1);
                 totalStaking = totalStaking.sub(1);
@@ -71,8 +71,8 @@ contract BitsForAiStaking is Initializable {
                 //new stake being restaked.
                 //do nothing
             //}
-            bfaStaker[tokenId] = msg.sender;
-            bfaCycleStakingStarted[tokenId] = currentCycle;
+            bitsStaker[tokenId] = msg.sender;
+            bitsCycleStakingStarted[tokenId] = currentCycle;
         }
     }
 
@@ -84,7 +84,7 @@ contract BitsForAiStaking is Initializable {
         for (uint i = 0; i < bitsForAiTokenIds.length; i++) {
             uint tokenId = bitsForAiTokenIds[i];
             require(
-                bfaStaker[tokenId] == msg.sender,
+                bitsStaker[tokenId] == msg.sender,
                 "Bits not staked by sender."
             );
             require(
@@ -92,7 +92,7 @@ contract BitsForAiStaking is Initializable {
                 "Bits must have an unclaimed Love reward."
             );
             totalLovePoints = totalLovePoints.add(reward);
-            bfaCycleClaimedAmount[tokenId][currentCycle.sub(1)] = reward;
+            bitsCycleClaimedAmount[tokenId][currentCycle.sub(1)] = reward;
         }
         biffyLovePoints.mint(msg.sender, totalLovePoints);
     }
@@ -105,24 +105,24 @@ contract BitsForAiStaking is Initializable {
         for (uint i = 0; i < bitsForAiTokenIds.length; i++) {
             uint tokenId = bitsForAiTokenIds[i];
             require(
-                bfaStaker[tokenId] == msg.sender,
+                bitsStaker[tokenId] == msg.sender,
                 "Sender can only unstake own staked Bits."
             );
-            if (bfaCycleStakingStarted[tokenId] < currentCycle && hasStarted) {
+            if (bitsCycleStakingStarted[tokenId] < currentCycle && hasStarted) {
                 //old stake being unstaked.
                 totalStaking = totalStaking.sub(1);
             } else {
               //new stake being unstaked
                 totalStakingNew = totalStakingNew.sub(1);
             }
-            delete bfaStaker[tokenId];
-            delete bfaCycleStakingStarted[tokenId];
+            delete bitsStaker[tokenId];
+            delete bitsCycleStakingStarted[tokenId];
         }
     }
 
     function stakingPoolSize() public view returns (uint) {
         return rewardBase.add(
-            totalBlpForRewardCalc.mulBP(rewardBpOfTotalBlp)
+            totalLoveForRewardCalc.mulBP(rewardBpOfTotalLove)
         );
     }
 
@@ -142,18 +142,18 @@ contract BitsForAiStaking is Initializable {
         totalStakingShares = totalStaking;
         lastStakingUpdate = currentCycle;
         totalStakingNew = 0;
-        totalBlpForRewardCalc = biffyLovePoints.totalSupply();
+        totalLoveForRewardCalc = biffyLovePoints.totalSupply();
     }
 
     function checkIfRewardAvailable(uint bitsForAiTokenId) public view returns (bool) {
         uint currentCycle = loveCycle.currentCycle();
         if (loveCycle.hasStarted() != true)
             return false;
-        if (bfaCycleStakingStarted[bitsForAiTokenId] >= currentCycle)
+        if (bitsCycleStakingStarted[bitsForAiTokenId] >= currentCycle)
             return false;
-        if (bfaCycleClaimedAmount[bitsForAiTokenId][currentCycle.sub(1)] != 0)
+        if (bitsCycleClaimedAmount[bitsForAiTokenId][currentCycle.sub(1)] != 0)
             return false;
-        if (bfaStaker[bitsForAiTokenId] == address(0x0))
+        if (bitsStaker[bitsForAiTokenId] == address(0x0))
             return false;
         return true;
     }
@@ -166,22 +166,22 @@ contract BitsForAiStaking is Initializable {
         for (uint i = 0; i < bitsForAiTokenIds.length; i++) {
             uint tokenId = bitsForAiTokenIds[i];
             require(
-                bitsForAi.ownerOf(tokenId) != bfaStaker[tokenId],
+                bitsForAi.ownerOf(tokenId) != bitsStaker[tokenId],
                 "The staker has not broken their promise and still holds the Bits."
             );
             require(
-                bfaStaker[tokenId] != address(0x0),
+                bitsStaker[tokenId] != address(0x0),
                 "The token must not be currently staked."
             );
-            if (bfaCycleStakingStarted[tokenId] < currentCycle && hasStarted) {
+            if (bitsCycleStakingStarted[tokenId] < currentCycle && hasStarted) {
                 //old stake being unstaked.
                 totalStaking = totalStaking.sub(1);
             } else {
               //new stake being unstaked
                 totalStakingNew = totalStakingNew.sub(1);
             }
-            delete bfaStaker[tokenId];
-            delete bfaCycleStakingStarted[tokenId];
+            delete bitsStaker[tokenId];
+            delete bitsCycleStakingStarted[tokenId];
         }
     }
 }
