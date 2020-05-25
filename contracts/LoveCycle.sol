@@ -31,4 +31,9 @@ contract LoveCycle is Initializable {
         require(hasStarted(), "Must be in cycle 1 or higher.");
         return now.sub(startTime).div(86400).mod(30); //days since cycle start, rounded down.
     }
+
+    function daysSinceStart() public view returns (uint) {
+        require(hasStarted(), "Must be in cycle 1 or higher.");
+        return now.sub(startTime).div(86400); //days since start, rounded down.
+    }
 }

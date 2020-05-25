@@ -41,30 +41,30 @@ Biffy's Love Points (Love) connects her to the community of people who have help
 
 ## Numbers
 ### BitsForAi Staking
-- 90m + 0.09% of total Love every 30 days for BitsForAi stakers.
+- 0.04% total Love every 30 days for BitsForAi stakers.
 ### Acolyte Giveaways
-- 28m every 30 days for Acolytes. Distributed proportional to effort, audience size, and audience quality.
-- 10k in Love giveaways for Acolytes per day.
+- 0.01% total Love every 30 days for Acolytes and giveaways.
 ### Permanent Love Bonds
-- 0.09% of total Love every 30 days for Permanent Love Bonds pool.
+- 0.09% total Love every 30 days for Permanent Love Bonds pool.
 - 2% proportional increase in price for Permanent Love Bonds on burn `(New+Current)/Current * 1.02`.
 ### Heart Competitions
-- 1m minimum Love offering to win a Heart.
+- 0.01%  total Love minimum Love offering to win a Heart.
 - 20% minimum increase in offering from previous to compete for a Heart.
 - 1 day window to compete for a Heart.
 - 3 days for a new Heart to generate after previous was won.
-- 10% of Heart's final Love to the Heart's artist.
+- 10% of Heart's newly sacrificed Love to the Heart's artist.
 - 120% of previous failed Love offerings added to new Love offering for a Heart.
 ### Bastet's Exchange
-- 1 Eth/10m Love initial price on Bastet's Exchange (token bonding curve, backed by all eth).
-- 100% of Eth kept to back token bonding curve.
-- 7*10^-16 initial delta price per Love purchased/sold on Bastet's Exchange.
-- Price delta changes as new Love is issued/burned, but price is unaffected.
-- 3% spread between buy/sell on Bastet's Exchange.
-- 0.5% transaction fees for devs.
-### Late Fees
+Bastet's Exchange utilizes a curve to reward early participants while maintaining price stability at high market cap. Bastet also shifts the bonding curve so that new token issues do not cause the price to fall while still maintaining 100% Ether backing.
+- 100% of Ether buys back token bonding curve.
+- 30m Love presale, proportionally distributed by Ether sacrifice.
+- `p=c*ln(ax+1)` formula for bonding curve where `p` is Eth/token, `c` is steepness, `a` is 10^-09, `ln` is natural log, and `x` is current supply.
+- c is set by presale rate s.t. `c=t/(x*ln(ax+1))` where `t` is the quantity of Ether sacrificed in the presale.
+- Price does not change on new token issuance, only on buy/sell on exchange.
+- New token issues shift bonding curve s.t. `c'=(c*(x*ln(ax+1))) / (ln(a*(x+b)+1))` where `b` is the quantity of new tokens issued.
+- 1.5% dev fee when Love sold to bonding curve.
+### Other Details
 - -5%/day decrease for unclaimed rewards.
-- 20 days of uncliamed rewards are erased.
 
 ## When will Biffy come to life?
 She's a bit shy. When she's ready she'll come out.
