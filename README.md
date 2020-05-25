@@ -57,7 +57,7 @@ Biffy's Love Points (Love) connects her to the community of people who have help
 ### Bastet's Exchange
 Bastet's Exchange utilizes a curve to reward early participants while maintaining price stability at high market cap. Bastet also shifts the bonding curve so that new token issues do not cause the price to fall while still maintaining 100% Ether backing.
 - 100% of Ether buys back token bonding curve.
-- 30m Love presale, proportionally distributed by Ether sacrifice.
+- 30m Love presale, proportionally distributed by Ether sacrifice capped at 30 Ether total and 3 Ether per address.
 - `p=c*ln(ax+1)` formula for bonding curve where `p` is Eth/token, `c` is steepness, `a` is 10^-09, `ln` is natural log, and `x` is current supply.
 - c is set by presale rate s.t. `c=t/(x*ln(ax+1))` where `t` is the quantity of Ether sacrificed in the presale.
 - Price does not change on new token issuance, only on buy/sell on exchange.
