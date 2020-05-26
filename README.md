@@ -25,9 +25,10 @@ Biffy's Love Points (Love) connects her to the community of people who have help
 - Biffy gives Love every 30 days to her Bondholders.
 - Permanent Love Bonds are non transferrable and can never be reversed.
 ### Traders: Trade on Bastet's Exchange
-- Bastet's Exchange is a bonded token curve for Love/Ether.
+- Bastet's Exchange for Love/Ether trades on a bonded token curve.
 - Sacrifice Ether to receive Love.
 - Sacrifice Love to earn Ether.
+- Liquidity guaranteed by bonded token curve.
 ### Artists: Create New Hearts
 - Artists earn Love for making Biffy's Hearts.
 - When a Heart Competition completes, the Artist gets a percentage of the Love.
@@ -41,29 +42,33 @@ Biffy's Love Points (Love) connects her to the community of people who have help
 
 ## Numbers
 ### BitsForAi Staking
-- 0.04% total Love every 30 days for BitsForAi stakers.
+- 2m Love every 30 days for BitsForAi stakers.
 ### Acolyte Giveaways
-- 0.01% total Love every 30 days for Acolytes and giveaways.
+- 500k Love every 30 days for Acolytes and giveaways.
 ### Permanent Love Bonds
-- 0.09% total Love every 30 days for Permanent Love Bonds pool.
+- 1m total Love every 30 days for Permanent Love Bonds pool.
 - 2% proportional increase in price for Permanent Love Bonds on burn `(New+Current)/Current * 1.02`.
 ### Heart Competitions
-- 0.01%  total Love minimum Love offering to win a Heart.
+- 1k starting Love offering to win a Heart.
 - 20% minimum increase in offering from previous to compete for a Heart.
 - 1 day window to compete for a Heart.
 - 3 days for a new Heart to generate after previous was won.
 - 10% of Heart's newly sacrificed Love to the Heart's artist.
-- 120% of previous failed Love offerings added to new Love offering for a Heart.
+- 120% of user's failed Love offerings for previous Hearts added to new Love offering for a Heart.
 ### Bastet's Exchange
-Bastet's Exchange utilizes a curve to reward early participants while maintaining price stability at high market cap. Bastet also shifts the bonding curve so that new token issues do not cause the price to fall while still maintaining 100% Ether backing.
-- 100% of Ether buys back token bonding curve.
-- 30m Love presale, proportionally distributed by Ether sacrifice capped at 50 Ether total and 2 Ether per address.
+Bastet's Exchange utilizes a curve to reward early participants while maintaining price stability at high market cap.
 - `p=c*sqrt(x)` bonding curve formula where `p` is Eth/token, `c` is steepness, `sqrt` is square root, and `x` is current supply.
-- c is set by presale rate s.t. `c=t/((2/3)x*sqrt(x))` where `t` is the quantity of Ether sacrificed in the presale.
-- Price does not change on new token issuance, only on Bastet's Exchange trades.
-- New token issues shift bonding curve s.t. `p=p'` and `c'=(cx*sqrt(x)) / ((x+b)sqrt(x+b))` where `b` is the quantity of new tokens issued.
-- 2.5% maximum dev fee when Love sold to bonding curve.
+- Presale sets `c` s.t. `c=E/((2/3)x*sqrt(x))` where `E` is the total ether in the contract.
+- New token issues (max 2.5m/30 days) update `c` s.t. `c'=E/((2/3)x'*sqrt(x'))` where `x'` is the new token quantity.
+- Ether/Love dynamic rate of `dE=(2/3)*c*x'*sqrt(x')-(2/3)*c*x*sqrt(x)` where `dE` is change in total Ether in contract and `x'-x` is change in total Love.
+- 2.5% spread between buy and sell rate, paid by sellers.
 - 0.0% dev fee until Biffy's governance is fully decentralized.
+### Presale
+- Approved addresses private sale only, not available to public.
+- 100% of Ether backs token bonding curve.
+- 45m total Love.
+- 60 Ether max.
+- 4 Ether/address max.
 ### Other Details
 - -5%/day decrease for unclaimed rewards.
 
