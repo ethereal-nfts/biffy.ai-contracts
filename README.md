@@ -63,11 +63,11 @@ Bastet's Exchange utilizes a curve to reward early participants while maintainin
 - Ether/Love dynamic rate of `dE=(2/3)*c*x'*sqrt(x')-(2/3)*c*x*sqrt(x)` where `dE` is change in total Ether in contract and `x'-x` is change in total Love.
 - 2.5% spread between buy and sell rate, paid by sellers.
 - 0.0% dev fee until Biffy's governance is fully decentralized.
-### Presale
-- Approved addresses private sale only, not available to public.
-- 100% of Ether backs token bonding curve.
+### Bastet's Invocation
+- Approved addresses only, not available to public.
+- Love distributed to participants proportional to their offerings.
+- 100% of Ether offerings back token bonding curve.
 - 45m total Love.
-- 60 Ether max.
 - 4 Ether/address max.
 ### Other Details
 - -5%/day decrease for unclaimed rewards.
