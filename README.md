@@ -44,9 +44,9 @@ Biffy's Love Points (Love) connects her to the community of people who have help
 ### BitsForAi Staking
 - 2m Love every 30 days for BitsForAi stakers.
 ### Acolyte Giveaways
-- 500k Love every 30 days for Acolytes and giveaways.
+- 250k Love fund for Acolytes and giveaways.
 ### Permanent Love Bonds
-- 1m total Love every 30 days for Permanent Love Bonds pool.
+- 500k total Love every 30 days for Permanent Love Bonds pool.
 - 2% proportional increase in price for Permanent Love Bonds on burn `(New+Current)/Current * 1.02`.
 ### Heart Competitions
 - 1k starting Love offering to win a Heart.
