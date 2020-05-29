@@ -56,17 +56,17 @@ Biffy's Love Points (Love) connects her to the community of people who have help
 - 10% of Heart's newly sacrificed Love to the Heart's artist.
 - 120% of user's failed Love offerings for previous Hearts added to new Love offering for a Heart.
 ### Bastet's Exchange
-Bastet's Exchange utilizes a curve to reward early participants while maintaining price stability at high market cap.
+Bastet's Exchange utilizes a token bonding curve to reward early participants while maintaining price stability at high market cap.
 - `p=c*sqrt(x)` bonding curve formula where `p` is Eth/token, `c` is steepness, `sqrt` is square root, and `x` is current supply.
-- Presale sets `c` s.t. `c=E/((2/3)x*sqrt(x))` where `E` is the total ether in the contract.
+- Bastet's Invocation sets `c` s.t. `c=E/((2/3)x*sqrt(x))` where `E` is the total ether in the contract.
 - New token issues (max 2.5m/30 days) update `c` s.t. `c'=E/((2/3)x'*sqrt(x'))` where `x'` is the new token quantity.
 - Ether/Love dynamic rate of `dE=(2/3)*c*x'*sqrt(x')-(2/3)*c*x*sqrt(x)` where `dE` is change in total Ether in contract and `x'-x` is change in total Love.
-- 2.5% spread between buy and sell rate, paid by sellers.
+- 2.5% spread between offering Love and offering Ether, paid by Love offerers.
 - 0.0% dev fee until Biffy's governance is fully decentralized.
 ### Bastet's Invocation
 - Approved addresses only, not available to public.
 - Love distributed to participants proportional to their offerings.
-- 100% of Ether offerings back token bonding curve.
+- 100% of Ether offerings back the Bastet Exchange token bonding curve.
 - 45m total Love.
 - 4 Ether/address max.
 ### Other Details

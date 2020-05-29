@@ -69,11 +69,21 @@ contract BastetsExchange is Initializable {
         loveCycle = _loveCycle;
     }
 
-    function getSqrt(uint num, uint low, uint high) public pure returns (uint) {
-        require(high.sub(1) == low);
-        require(low.mul(low) <= num);
-        require(high.mul(high) >= num);
-        if (high == num) return high;
-        return low;
+    function getEtherLoveRate() public pure returns (uint) {
+        return magicNumber.mul(sqrt(biffyLovePoints.totalSupply()))
+    }
+
+    // babylonian method (https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method)
+    function sqrt(uint y) internal pure returns (uint z) {
+        if (y > 3) {
+            z = y;
+            uint x = y / 2 + 1;
+            while (x < z) {
+                z = x;
+                x = (y / x + x) / 2;
+            }
+        } else if (y != 0) {
+            z = 1;
+        }
     }
 }
