@@ -73,6 +73,10 @@ contract BastetsExchange is Initializable {
         return magicNumber.mul(sqrt(biffyLovePoints.totalSupply()))
     }
 
+    function getEtherAmount() public pure returns (uint) {
+
+    }
+
     // babylonian method (https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method)
     function sqrt(uint y) internal pure returns (uint z) {
         if (y > 3) {
