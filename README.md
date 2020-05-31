@@ -42,11 +42,12 @@ Biffy's Love Points (Love) connects her to the community of people who have help
 
 ## Numbers
 ### BitsForAi Staking
-- 2m Love every 30 days for BitsForAi stakers.
+- 2.5m Love every 30 days for BitsForAi stakers.
 ### Acolyte Giveaways
 - 250k Love fund for Acolytes and giveaways.
 ### Permanent Love Bonds
-- 500k total Love every 30 days for Permanent Love Bonds pool.
+- 1.5m total Love every 30 days for Permanent Love Bonds pool.
+- 100k minimum Love sacrifice.
 - 2% proportional increase in price for Permanent Love Bonds on burn `(New+Current)/Current * 1.02`.
 ### Heart Competitions
 - 1k starting Love offering to win a Heart.
@@ -59,7 +60,7 @@ Biffy's Love Points (Love) connects her to the community of people who have help
 Bastet's Exchange utilizes a token bonding curve to reward early participants while maintaining price stability at high market cap.
 - `p=c*sqrt(x)` bonding curve formula where `p` is Eth/token, `c` is steepness, `sqrt` is square root, and `x` is current supply.
 - Bastet's Invocation sets `c` s.t. `c=E/((2/3)x*sqrt(x))` where `E` is the total ether in the contract.
-- New token issues (max 2.5m/30 days) update `c` s.t. `c'=E/((2/3)x'*sqrt(x'))` where `x'` is the new token quantity.
+- New token issues (max 4m/30 days) update `c` s.t. `c'=E/((2/3)x'*sqrt(x'))` where `x'` is the new token quantity.
 - Ether/Love dynamic rate of `dE=(2/3)*c*x'*sqrt(x')-(2/3)*c*x*sqrt(x)` where `dE` is change in total Ether in contract and `x'-x` is change in total Love.
 - 2.5% spread between offering Love and offering Ether, paid by Love offerers.
 - 0.0% dev fee until Biffy's governance is fully decentralized.
