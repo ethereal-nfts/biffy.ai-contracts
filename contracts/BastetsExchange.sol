@@ -9,6 +9,8 @@ import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
 import "@openzeppelin/upgrades/contracts/Initializable.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/access/roles/WhitelistedRole.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/ownership/Ownable.sol";
+import "@openzeppelin/contracts-ethereum-package/utils/ReentrancyGuard.sol";
+
 
 contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
     using BasisPoints for uint;
@@ -42,15 +44,19 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
     ];
 
     uint public magicNumber;
+    uint public magicNumberDivisor = 1 ether;
+
+    uint lastMagicNumberUpdateEther;
+    uint lastMagicNumberUpdateLove;
 
     string public bastetOfferingEtherScript = "I offer this Ether to you, Daughter of Ra.";
-    string public bastetOfferingLoveScripte = "I offer this Love to you, Queen of Cats.";
+    string public bastetOfferingLoveScript = "I offer this Love to you, Queen of Cats.";
 
     event BastetInvocation(address invoker, string message);
     event BastetInvocationEtherOffering(address supplicant, string message, uint ether);
     event BastetInvocationLoveClaim(address supplicant, uint love);
-    event BastetEtherOffering(address suplicant, string message, uint ether);
-    event BastetLoveOffering(address supplicant, string message, uint love);
+    event BastetEtherOffering(address suplicant, string message, uint ether, uint love);
+    event BastetLoveOffering(address supplicant, string message, uint ether, uint love);
 
     modifier whileInvokingBastet() {
         require(
@@ -78,6 +84,7 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
     ) public initializer {
         WhitelistedRole.initialize(msg.sender);
         Ownable.initialize(msg.sender);
+        ReentrancyGuard.initialize();
         biffyLovePoints = _biffyLovePoints;
         loveCycle = _loveCycle;
     }
@@ -92,6 +99,7 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
 
     function invokeBastet() public payable onlyWhitelisted whileInvokingBastet {
         require(invokerOffering[msg.sender].add(msg.value) <= invokerMaxEtherOffering, "Maximum offering exceeded.");
+        updateMagicNumber();
         invokerOffering[msg.sender] = invokerOffering[msg.sender].add(msg.value);
         totalInvocationOffering += msg.value;
         if (bastetInvocationScriptLine < 13) {
@@ -107,6 +115,24 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
         invokerOffering[msg.sender] = 0;
         biffyLovePoints.transfer(msg.sender, loveClaim);
         emit BastetInvocationLoveClaim(msg.sender, loveClaim);
+    }
+
+    function sacrificeEtherForLove(uint loveAmount) public payable nonReentrant returns (uint) {
+        uint etherAmount = amtEtherToEarnLove(loveAmount);
+        require(msg.value >= etherAmount, "Must sacrifice enough Ether.");
+        emit BastetEtherOffering(msg.sender, bastetOfferingEtherScript, etherAmount, loveAmount);
+        biffyLovePoints.mint(msg.sender, loveAmount);
+        if (msg.value > etherAmount) msg.sender.transfer(msg.value.sub(etherAmount));
+        return etherAmount;
+    }
+
+    function sacrificeLoveForEther(uint loveAmount) public payable nonReentrant returns (uint) {
+      //TODO Add fees
+        uint etherAmount = amtEtherFromLoveSacrifice(loveAmount);
+        require(biffyLovePoints.balanceOf(msg.sender) >= loveAmount);
+        emit BastetLoveOffering(msg.sender, bastetOfferingLoveScript, etherAmount, loveAmount);
+        biffyLovePoints.burnFrom(msg.sender, loveAmount);
+        msg.sender.transfer(etherAmount);
     }
 
     function getEtherLoveRate() public pure returns (uint) {
@@ -147,9 +173,14 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
         }
     }
 
-    function _updateMagicNumber() internal {
+    function updateMagicNumber() internal {
         uint loveSupply = biffyLovePoints.totalSupply();
-        magicNumber = address(this).balance.mul(3).div(2).div(
+        if (
+            lastMagicNumberUpdateEther == address(this).balance &&
+            lastMagicNumberUpdateLove == loveSupply
+        )   return;
+        if (address(this).balance == 0) magicNumber = 1;
+        magicNumber = address(this).balance.mul(magicNumberDivisor).mul(3).div(2).div(
             loveSupply.mul(sqrt(loveSupply))
         );
     }
