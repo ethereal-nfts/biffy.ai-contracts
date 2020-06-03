@@ -9,10 +9,10 @@ import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
 import "@openzeppelin/upgrades/contracts/Initializable.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/access/roles/WhitelistedRole.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/ownership/Ownable.sol";
-import "@openzeppelin/contracts-ethereum-package/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts-ethereum-package/contracts/utils/ReentrancyGuard.sol";
 
 
-contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
+contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyGuard {
     using BasisPoints for uint;
     using SafeMath for uint;
 
@@ -56,10 +56,10 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
     string public bastetOfferingLoveScript = "I offer this Love to you, Queen of Cats.";
 
     event BastetInvocation(address invoker, string message);
-    event BastetInvocationEtherOffering(address supplicant, string message, uint ether);
+    event BastetInvocationEtherOffering(address supplicant, string message, uint eth);
     event BastetInvocationLoveClaim(address supplicant, uint love);
-    event BastetEtherOffering(address suplicant, string message, uint ether, uint love);
-    event BastetLoveOffering(address supplicant, string message, uint ether, uint love);
+    event BastetEtherOffering(address suplicant, string message, uint eth, uint love);
+    event BastetLoveOffering(address supplicant, string message, uint eth, uint love);
 
     modifier whileInvokingBastet() {
         require(
@@ -92,7 +92,7 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
         loveCycle = _loveCycle;
     }
 
-    function bastetRitualSetUp(_invokerMaxEtherOffering, _invocationLove) public onlyOwner {
+    function bastetRitualSetUp(uint _invokerMaxEtherOffering, uint _invocationLove) public onlyOwner {
         require(!isRitualSetUp, "Bastet ritual already set up.");
         invokerMaxEtherOffering = _invokerMaxEtherOffering;
         invocationLove = _invocationLove;
@@ -114,7 +114,7 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
 
     function claimInvocationLove() public onlyWhitelisted whenBastetInvoked {
         require(invokerOffering[msg.sender] > 0, "Invoker has no Love claim remaining.");
-        uint loveClaim = totalOffered.mul(invocationLove).div(invokerOffering[msg.sender]);
+        uint loveClaim = totalInvocationOffering.mul(invocationLove).div(invokerOffering[msg.sender]);
         invokerOffering[msg.sender] = 0;
         biffyLovePoints.transfer(msg.sender, loveClaim);
         emit BastetInvocationLoveClaim(msg.sender, loveClaim);
@@ -138,11 +138,11 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
         msg.sender.transfer(etherAmount);
     }
 
-    function getEtherLoveRate() public pure returns (uint) {
-        return magicNumber.mul(sqrt(biffyLovePoints.totalSupply()))
+    function getEtherLoveRate() public view returns (uint) {
+        return magicNumber.mul(sqrt(biffyLovePoints.totalSupply()));
     }
 
-    function amtEtherFromLoveSacrifice(uint loveAmount) public pure returns (uint) {
+    function amtEtherFromLoveSacrifice(uint loveAmount) public view returns (uint) {
         uint loveSupply = biffyLovePoints.totalSupply();
         uint loveSupplyFinal = loveSupply.sub(loveAmount);
         return magicNumber.mul(2).div(3).mul(
@@ -152,7 +152,7 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
         );
     }
 
-    function amtEtherToEarnLove(uint loveAmount) public pure returns (uint) {
+    function amtEtherToEarnLove(uint loveAmount) public view returns (uint) {
         uint loveSupply = biffyLovePoints.totalSupply();
         uint loveSupplyFinal = loveSupply.add(loveAmount);
         return magicNumber.mul(2).div(3).mul(
@@ -167,9 +167,9 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
     }
 
     function onlyOwnerSetDevFee(uint feeBP) public onlyOwner {
-        devFee = feeBP;
+        devFeeBP = feeBP;
     }
-    
+
     // babylonian method (https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method)
     function sqrt(uint y) internal pure returns (uint z) {
         if (y > 3) {
