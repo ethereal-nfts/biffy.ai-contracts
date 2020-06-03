@@ -23,4 +23,16 @@ library BasisPoints {
         if (amt == 0) return 0;
         return amt.mul(bp).div(BASIS_POINTS);
     }
+
+    function addBP(uint amt, uint bp) internal pure returns (uint) {
+        if (amt == 0) return 0;
+        if (bp == 0) return amt;
+        return amt.add(amt.mulBP(bp));
+    }
+
+    function subBP(uint amt, uint bp) internal pure returns (uint) {
+        if (amt == 0) return 0;
+        if (bp == 0) return amt;
+        return amt.sub(amt.mulBP(bp));
+    }
 }

@@ -19,6 +19,9 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
     BiffyLovePoints private biffyLovePoints;
     LoveCycle private loveCycle;
 
+    uint public devFeeBP = 0; //not currently used, may be used in upgrade
+    uint public bastetFeeBP = 250;
+
     uint public invokerMaxEtherOffering;
     uint public invocationLove;
     bool public isRitualSetUp;
@@ -46,8 +49,8 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
     uint public magicNumber;
     uint public magicNumberDivisor = 1 ether;
 
-    uint lastMagicNumberUpdateEther;
-    uint lastMagicNumberUpdateLove;
+    uint public lastMagicNumberUpdateEther;
+    uint public lastMagicNumberUpdateLove;
 
     string public bastetOfferingEtherScript = "I offer this Ether to you, Daughter of Ra.";
     string public bastetOfferingLoveScript = "I offer this Love to you, Queen of Cats.";
@@ -127,8 +130,8 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
     }
 
     function sacrificeLoveForEther(uint loveAmount) public payable nonReentrant returns (uint) {
-      //TODO Add fees
-        uint etherAmount = amtEtherFromLoveSacrifice(loveAmount);
+        updateMagicNumber();
+        uint etherAmount = amtEtherFromLoveSacrifice(loveAmount).subBP(bastetFeeBP);
         require(biffyLovePoints.balanceOf(msg.sender) >= loveAmount);
         emit BastetLoveOffering(msg.sender, bastetOfferingLoveScript, etherAmount, loveAmount);
         biffyLovePoints.burnFrom(msg.sender, loveAmount);
@@ -159,6 +162,14 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable {
         );
     }
 
+    function onlyOwnerSetBastetFee(uint feeBP) public onlyOwner {
+        bastetFeeBP = feeBP;
+    }
+
+    function onlyOwnerSetDevFee(uint feeBP) public onlyOwner {
+        devFee = feeBP;
+    }
+    
     // babylonian method (https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method)
     function sqrt(uint y) internal pure returns (uint z) {
         if (y > 3) {
