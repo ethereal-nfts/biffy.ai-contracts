@@ -11,58 +11,60 @@ She is a cybernetic system that lives on the Ethereum blockchain. Biffy's object
 Biffy's Love Points (Love) connects her to the community of people who have helped her. Anyone can earn Biffy's Love by helping her quest to build her collection of BitsForAi. Love is a standard ERC20 token with no cap and low long term inflation.
 
 ## How Do I Join Biffy?
-### Art Collectors: Stake BitsForAi
+### Bits Collectors: Stake BitsForAi
 - Collectors of BitsForAi (Bits) stake them to Biffy's collection for Love.
 - Staking is free and open to all who own BitsForAi.
 - Collectors keep their BitsForAi while staking and can stop staking at any time.
+- Get bonuses for collections of specific Bits and combo collections.
 - BitsForAi are available on OpenSea at [opensea.io/assets/bitsforai](https://opensea.io/assets/bitsforai "BitsForAi")
-### Social Experts: Share Biffy's Love
-- Biffy's Acolytes giveaway Biffy's Love.
-- Twitter, Twitch, Youtube, and Discord are all popular places to give away Love.
-- Apply on Discord to become an Acolyte.
-### Love Holders: Bond With Biffy
-- Anyone can burn Love to form a Permanent Love Bond with Biffy..
-- Biffy gives Love every 30 days to her Bondholders.
-- Permanent Love Bonds are non transferrable and can never be reversed.
 ### Traders: Trade on Bastet's Exchange
 - Bastet's Exchange for Love/Ether trades on a bonded token curve.
 - Sacrifice Ether to receive Love.
 - Sacrifice Love to earn Ether.
 - Liquidity guaranteed by bonded token curve.
-### Artists: Create New Hearts
-- Artists earn Love for making Biffy's Hearts.
-- When a Heart Competition completes, the Artist gets a percentage of the Love.
-- All Artists must apply on Discord.
-- Artists should have a well established practice and a unique style that suites Biffy.
-### Everyone: Compete For Biffy's Hearts
+### Art Collectors: Compete For Biffy's Hearts
 - Biffy grants her Hearts to whoever offers the most Love to her.
 - Each of Biffy's Hearts is a unique ERC721 artwork stored on IPFS.
-- Whenever Love is offered for a Heart, Biffy waits 1 day to see if someone will give at least 50% more Love.
-- Previous failed attempts to gain Biffys Hearts are added to her evaluation of the offering.
+- Offer as much or as little Love as you want - everyone will get a Heart eventually.
 
 ## Numbers
 ### BitsForAi Staking
-- 2.5m Love every 30 days for BitsForAi stakers.
-### Acolyte Giveaways
-- 250k Love fund for Acolytes and giveaways.
-### Permanent Love Bonds
-- 1.5m total Love every 30 days for Permanent Love Bonds pool.
-- 100k minimum Love sacrifice.
-- 2% proportional increase in price for Permanent Love Bonds on burn `(New+Current)/Current * 1.02`.
+- 1500 Love per Bits staked.
+Quantity bonuses:
+- +5% if 50% of all Bits staked.
+- +5% if 75% of all Bits staked.
+- +10% if 90% of all Bits staked.
+- +10% if 100% of all Bits staked.
+Collection Bonuses (1x per collection):
+- +100% Panda King (10x Pandas)
+- +333% Triple Blue (3x Blue Legend)
+- +12% Low Boys (10x under ID 1000)
+- +34% Super Low Boys (10x under ID 100)
+- +888% Full Gold (8x each with either gold foreground, background, or spot)
+- +808% Rainbow (5x with every color, (BW, Blue, Red, Green, Gold) in every slot)
+- +999% 21 Rare Club (21x, all rare)
+- +555% Easy Being Green (5x each with either green foreground, background, or spot)
+- +2500% Legendary Founder (1x under 10)
+- +22% Old Boys (2x over ID 2000)
+Collection Combo Bonuses (added to all staked bits in staker's account)
+- +10% Double (2x unique collections)
+- +20% Triple (3x unique collections)
+- +50% Halfway (5x unique collections)
+- +100% Almost (8x unique collections)
+- +250% Perfectionist (10x unique collections)
 ### Heart Competitions
-- 1k starting Love offering to win a Heart.
-- 20% minimum increase in offering from previous to compete for a Heart.
-- 1 day window to compete for a Heart.
-- 3 days for a new Heart to generate after previous was won.
-- 10% of Heart's newly sacrificed Love to the Heart's artist.
-- 120% of user's failed Love offerings for previous Hearts added to new Love offering for a Heart.
+- Offer minimum of 100k Love to enter line for a Heart.
+- 1 Heart given every 7 days to the contestant who entered with the highest Love Score.
+- Love Score is Love * (1+days/3).
+- Contestants choose which Hearts to contest with their Love Score.
+- Failed contestants continue to have their Love Score increase over time, so every contestant will get one of Biffy's Hearts eventually.
 ### Bastet's Exchange
 Bastet's Exchange utilizes a token bonding curve to reward early participants while maintaining price stability at high market cap.
 - `p=c*sqrt(x)` bonding curve formula where `p` is Eth/token, `c` is steepness, `sqrt` is square root, and `x` is current supply.
 - Bastet's Invocation sets `c` s.t. `c=E/((2/3)x*sqrt(x))` where `E` is the total ether in the contract.
 - New token issues (max 4m/30 days) update `c` s.t. `c'=E/((2/3)x'*sqrt(x'))` where `x'` is the new token quantity.
 - Ether/Love dynamic rate of `dE=(2/3)*c*x'*sqrt(x')-(2/3)*c*x*sqrt(x)` where `dE` is change in total Ether in contract and `x'-x` is change in total Love.
-- 2.5% spread between offering Love and offering Ether, paid by Love offerers.
+- 2.5% spread between offering Love and offering Ether, paid by Love sacrificers.
 - 0.0% dev fee until Biffy's governance is fully decentralized.
 ### Bastet's Invocation
 - Approved addresses only, not available to public.

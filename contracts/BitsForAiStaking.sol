@@ -18,8 +18,7 @@ contract BitsForAiStaking is Initializable {
     IERC721 private bitsForAi;
     LoveCycle private loveCycle;
 
-    uint private rewardBase;
-    uint private rewardBpOfTotalLove;
+    uint private rewardPerBits;
     uint private rewardDecayBP;
 
     uint public totalStakingShares;
@@ -37,14 +36,12 @@ contract BitsForAiStaking is Initializable {
         IERC721 _bitsForAi,
         LoveCycle _loveCycle,
         uint _rewardBase,
-        uint _rewardBpOfTotalLove,
         uint _rewardDecayBP
     ) public initializer {
         biffyLovePoints = _biffyLovePoints;
         bitsForAi = _bitsForAi;
         loveCycle = _loveCycle;
         rewardBase = _rewardBase;
-        rewardBpOfTotalLove = _rewardBpOfTotalLove;
         rewardDecayBP = _rewardDecayBP;
     }
 
@@ -127,14 +124,15 @@ contract BitsForAiStaking is Initializable {
     }
 
     function stakingRewardPerBits() public view returns (uint) {
+      //TODO: Add bonuses
         require(totalStakingShares != 0, "Must have at least 1 Bits eligible to calculate rewards.");
-        uint base = stakingPoolSize().div(totalStakingShares);
         uint daysSinceCycleStart = loveCycle.daysSinceCycleStart();
         if (daysSinceCycleStart == 0) return base;
         if (daysSinceCycleStart >= 20) return 0;
         return base.sub(base.mulBP(rewardDecayBP.mul(daysSinceCycleStart)));
     }
 
+//TODO: Since no longer calculating BP and payout is per bits, just need to know instantaneous staking (no shares)
     function updateTotalStakingPreviousCycles() public {
         uint currentCycle = loveCycle.currentCycle();
         if (currentCycle == lastStakingUpdate) return;
