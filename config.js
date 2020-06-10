@@ -18,8 +18,7 @@ config.InitializationLoveCycle = {
 }
 
 config.InitializationBitsForAiStaking = {
-  rewardBase: ether("2000000"),
-  rewardBpOfTotalLove: 0,
+  rewardBase: ether("1500"),
   rewardDecayBP: 500
 }
 

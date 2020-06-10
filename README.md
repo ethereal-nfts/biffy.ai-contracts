@@ -23,9 +23,9 @@ Biffy's Love Points (Love) connects her to the community of people who have help
 - Sacrifice Love to earn Ether.
 - Liquidity guaranteed by bonded token curve.
 ### Art Collectors: Compete For Biffy's Hearts
-- Biffy grants her Hearts to whoever offers the most Love to her.
+- Biffy grants her Hearts to whoever sacrifices the most Love to her.
 - Each of Biffy's Hearts is a unique ERC721 artwork stored on IPFS.
-- Offer as much or as little Love as you want - everyone will get a Heart eventually.
+- Be warned - many others are competing for Biffy's Hearts and only the greatest sacrifice will win.
 
 ## Numbers
 ### BitsForAi Staking
@@ -53,11 +53,11 @@ Collection Combo Bonuses (added to all staked bits in staker's account)
 - +100% Almost (8x unique collections)
 - +250% Perfectionist (10x unique collections)
 ### Heart Competitions
-- Offer minimum of 100k Love to enter line for a Heart.
-- 1 Heart given every 7 days to the contestant who entered with the highest Love Score.
-- Love Score is Love * (1+days/3).
-- Contestants choose which Hearts to contest with their Love Score.
-- Failed contestants continue to have their Love Score increase over time, so every contestant will get one of Biffy's Hearts eventually.
+- 1 Heart given every 7 days to the contestant who gave the highest Love sacrifice that week.
+- Love sacrificed to compete for a Heart is burned permanently.
+- Sacrifice bonus of `sqrt(x)` from all previous sacrifices.
+- 10k mininum Love sacrifice.
+- Multiple sacrifices during the 7 day contest period are additive but do not roll over to the next week.
 ### Bastet's Exchange
 Bastet's Exchange utilizes a token bonding curve to reward early participants while maintaining price stability at high market cap.
 - `p=c*sqrt(x)` bonding curve formula where `p` is Eth/token, `c` is steepness, `sqrt` is square root, and `x` is current supply.
