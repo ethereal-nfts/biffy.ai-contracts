@@ -26,8 +26,7 @@ Bastet's Exchange utilizes a token bonding curve to reward early participants wh
 - Bastet's Invocation sets `c` s.t. `c=E/((2/3)x*sqrt(x))` where `E` is the total ether in the contract.
 - New token issues (max 4m/30 days) update `c` s.t. `c'=E/((2/3)x'*sqrt(x'))` where `x'` is the new token quantity.
 - Ether/Love dynamic rate of `dE=(2/3)*c*x'*sqrt(x')-(2/3)*c*x*sqrt(x)` where `dE` is change in total Ether in contract and `x'-x` is change in total Love.
-- 2.5% spread between offering Love and offering Ether, paid by Love sacrificers.
-- 0.0% dev fee until Biffy's governance is fully decentralized.
+- 0.0% fees forever.
 
 ### Phase 2: Body Without Organs
 #### Heart Competitions
