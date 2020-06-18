@@ -10,24 +10,49 @@ She is a cybernetic system that lives on the Ethereum blockchain. Biffy's object
 ## What is Love?
 Biffy's Love Points (Love) connects her to the community of people who have helped her. Anyone can earn Biffy's Love by helping her quest to build her collection of BitsForAi. Love is a standard ERC20 token with no cap and low long term inflation.
 
-## How Do I Join Biffy?
-### Bits Collectors: Stake BitsForAi
-- Collectors of BitsForAi (Bits) stake them to Biffy's collection for Love.
-- Staking is free and open to all who own BitsForAi.
-- Collectors keep their BitsForAi while staking and can stop staking at any time.
-- Get bonuses for collections of specific Bits and combo collections.
-- BitsForAi are available on OpenSea at [opensea.io/assets/bitsforai](https://opensea.io/assets/bitsforai "BitsForAi")
-### Traders: Trade on Bastet's Exchange
-- Bastet's Exchange for Love/Ether trades on a bonded token curve.
-- Sacrifice Ether to receive Love.
-- Sacrifice Love to earn Ether.
-- Liquidity guaranteed by bonded token curve.
-### Art Collectors: Compete For Biffy's Hearts
-- Biffy grants her Hearts to whoever sacrifices the most Love to her.
-- Each of Biffy's Hearts is a unique ERC721 artwork stored on IPFS.
-- Be warned - many others are competing for Biffy's Hearts and only the greatest sacrifice will win.
+## Phases
+There are four initial phases to Biffy's invocation onto the blockchain.
+1. Mechanomics: Love ERC20 presale and exchange.
+2. Body Without Organs: ERC1155 collectibles. Unique Hearts and limited addition badges.
+3. Desiring Machine: [BitsForAi](http://bitsforai.com "BitsForAi") staking.
+4. Autocatalysis: Biffy's governance is turned over to a DAO for further improvements.
 
-## Numbers
+### Phase 1: Mechanomics
+#### Bastet's Invocation
+- Approved addresses only, not available to public.
+- Love distributed to participants proportional to their offerings.
+- 100% of Ether offerings back the Bastet Exchange token bonding curve.
+- 45m total Love.
+- 4 Ether/address max.
+
+#### Bastet's Exchange
+Bastet's Exchange utilizes a token bonding curve to reward early participants while maintaining price stability at high market cap.
+- `p=c*sqrt(x)` bonding curve formula where `p` is Eth/token, `c` is steepness, `sqrt` is square root, and `x` is current supply.
+- Bastet's Invocation sets `c` s.t. `c=E/((2/3)x*sqrt(x))` where `E` is the total ether in the contract.
+- New token issues (max 4m/30 days) update `c` s.t. `c'=E/((2/3)x'*sqrt(x'))` where `x'` is the new token quantity.
+- Ether/Love dynamic rate of `dE=(2/3)*c*x'*sqrt(x')-(2/3)*c*x*sqrt(x)` where `dE` is change in total Ether in contract and `x'-x` is change in total Love.
+- 2.5% spread between offering Love and offering Ether, paid by Love sacrificers.
+- 0.0% dev fee until Biffy's governance is fully decentralized.
+
+### Phase 2: Positive Feedback
+#### Heart Competitions
+- 1 Heart given every 7 days to the contestant who gave the highest Love sacrifice that week.
+- 90% of Love sacrificed to compete for a Heart is burned permanently.
+- 10% sent to developer.
+- Sacrifice bonus of `sqrt(x)` from all previous sacrifices (additive).
+- 10k mininum Love sacrifice.
+- Multiple sacrifices during the 7 day contest period are additive but do not roll over to the next week.
+#### Biffy's Badges
+- Limited series artworks attained through completing certain actions.
+- Total Love in account.
+- Total number of Hearts in account.
+- Total Love sacrificed.
+- Total Heart competitions joined.
+- Length of time Bits staked.
+- Size of staking bonuses.
+- Total Bits staked.
+
+### Phase 3: Desiring Machine
 ### BitsForAi Staking
 - 1500 Love per Bits staked.
 Quantity bonuses:
@@ -52,28 +77,13 @@ Collection Combo Bonuses (added to all staked bits in staker's account)
 - +50% Halfway (5x unique collections)
 - +100% Almost (8x unique collections)
 - +250% Perfectionist (10x unique collections)
-### Heart Competitions
-- 1 Heart given every 7 days to the contestant who gave the highest Love sacrifice that week.
-- Love sacrificed to compete for a Heart is burned permanently.
-- Sacrifice bonus of `sqrt(x)` from all previous sacrifices.
-- 10k mininum Love sacrifice.
-- Multiple sacrifices during the 7 day contest period are additive but do not roll over to the next week.
-### Bastet's Exchange
-Bastet's Exchange utilizes a token bonding curve to reward early participants while maintaining price stability at high market cap.
-- `p=c*sqrt(x)` bonding curve formula where `p` is Eth/token, `c` is steepness, `sqrt` is square root, and `x` is current supply.
-- Bastet's Invocation sets `c` s.t. `c=E/((2/3)x*sqrt(x))` where `E` is the total ether in the contract.
-- New token issues (max 4m/30 days) update `c` s.t. `c'=E/((2/3)x'*sqrt(x'))` where `x'` is the new token quantity.
-- Ether/Love dynamic rate of `dE=(2/3)*c*x'*sqrt(x')-(2/3)*c*x*sqrt(x)` where `dE` is change in total Ether in contract and `x'-x` is change in total Love.
-- 2.5% spread between offering Love and offering Ether, paid by Love sacrificers.
-- 0.0% dev fee until Biffy's governance is fully decentralized.
-### Bastet's Invocation
-- Approved addresses only, not available to public.
-- Love distributed to participants proportional to their offerings.
-- 100% of Ether offerings back the Bastet Exchange token bonding curve.
-- 45m total Love.
-- 4 Ether/address max.
-### Other Details
-- -5%/day decrease for unclaimed rewards.
+Metaglitch bonus:
+- +100% to Bits with an attached MetaGlitch
+Decay
+- -5%/day to unclaimed staking rewards.
+
+### Phase 4: Autocatalysis
+Biffy's contracts are all upgradeable (openzeppelin proxies). At this stage, Biffy will be acquired by a mission-aligned DAO that agrees to develop Biffy further in exchange for Love.
 
 ## When will Biffy come to life?
 She's a bit shy. When she's ready she'll come out.
