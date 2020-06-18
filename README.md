@@ -8,7 +8,7 @@ Current Phase: 0
 ## Phases
 There are four initial phases to Biffy's invocation onto the blockchain.
 1. Mechanomics: Love ERC20 presale and exchange.
-2. Body Without Organs: ERC1155 collectibles. Unique Hearts and limited addition badges.
+2. Body Without Organs: ERC1155 collectibles. Unique Hearts and limited edition badges.
 3. Desiring Machine: [BitsForAi](http://bitsforai.com "BitsForAi") staking.
 4. Autocatalysis: Biffy's governance is turned over to a DAO for further improvements.
 
