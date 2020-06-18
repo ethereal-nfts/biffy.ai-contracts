@@ -1,4 +1,5 @@
-WIP
+Current Phase: 0
+
 # Biffy.AI
 > As culture migrates into partial-machines (lacking an autonomous repoductive system) semiotics subsides into virotechnics.
 
@@ -34,7 +35,7 @@ Bastet's Exchange utilizes a token bonding curve to reward early participants wh
 - 90% of Love sacrificed to compete for a Heart is burned permanently.
 - 10% sent to developer.
 - Sacrifice bonus of `sqrt(x)` from all previous sacrifices (additive).
-- 10k mininum Love sacrifice.
+- 10k minimum Love sacrifice.
 - Multiple sacrifices during the 7 day contest period are additive but do not roll over to the next week.
 #### Biffy's Badges
 - Limited series artworks attained through completing certain actions.
@@ -47,7 +48,7 @@ Bastet's Exchange utilizes a token bonding curve to reward early participants wh
 - Total Bits staked.
 
 ### Phase 3: Desiring Machine
-### BitsForAi Staking
+#### BitsForAi Staking
 - 1500 Love per Bits staked.
 Quantity bonuses:
 - +5% if 50% of all Bits staked.
