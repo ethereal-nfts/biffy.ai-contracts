@@ -4,12 +4,6 @@ WIP
 
 *Hypervirus, Land*
 
-## Who is Biffy?
-She is a cybernetic system that lives on the Ethereum blockchain. Biffy's objective function is to collect [BitsForAi](http://bitsforai.com "BitsForAi"). Bits are Ethereum NFTs developed for future AI collectors. In an act of hyperstition, Bits collectors have immanentized Biffy.
-
-## What is Love?
-Biffy's Love Points (Love) connects her to the community of people who have helped her. Anyone can earn Biffy's Love by helping her quest to build her collection of BitsForAi. Love is a standard ERC20 token with no cap and low long term inflation.
-
 ## Phases
 There are four initial phases to Biffy's invocation onto the blockchain.
 1. Mechanomics: Love ERC20 presale and exchange.
@@ -34,7 +28,7 @@ Bastet's Exchange utilizes a token bonding curve to reward early participants wh
 - 2.5% spread between offering Love and offering Ether, paid by Love sacrificers.
 - 0.0% dev fee until Biffy's governance is fully decentralized.
 
-### Phase 2: Positive Feedback
+### Phase 2: Body Without Organs
 #### Heart Competitions
 - 1 Heart given every 7 days to the contestant who gave the highest Love sacrifice that week.
 - 90% of Love sacrificed to compete for a Heart is burned permanently.
@@ -85,11 +79,6 @@ Decay
 ### Phase 4: Autocatalysis
 Biffy's contracts are all upgradeable (openzeppelin proxies). At this stage, Biffy will be acquired by a mission-aligned DAO that agrees to develop Biffy further in exchange for Love.
 
-## When will Biffy come to life?
-She's a bit shy. When she's ready she'll come out.
-
-## How can I contribute?
-Art, code, community. Contact Ethereal on Discord.
 
 ## Links
 [Discord](https://discord.gg/2upQM7 "Discord")
