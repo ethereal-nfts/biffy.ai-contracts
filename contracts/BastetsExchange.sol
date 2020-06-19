@@ -3,7 +3,6 @@ pragma solidity 0.5.17;
 import "./BiffyLovePoints.sol";
 import "./LoveCycle.sol";
 import "./interfaces/UniswapExchangeInterface.sol";
-import "./library/BasisPoints.sol";
 
 import "@openzeppelin/contracts-ethereum-package/contracts/math/SafeMath.sol";
 import "@openzeppelin/upgrades/contracts/Initializable.sol";
@@ -13,20 +12,17 @@ import "@openzeppelin/contracts-ethereum-package/contracts/utils/ReentrancyGuard
 
 
 contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyGuard {
-    using BasisPoints for uint;
     using SafeMath for uint;
 
     BiffyLovePoints private biffyLovePoints;
-    LoveCycle private loveCycle;
-
-    uint public devFeeBP = 0; //not currently used, may be used in upgrade
-    uint public bastetFeeBP = 250;
 
     uint public invokerMaxEtherOffering;
     uint public invocationLove;
     bool public isRitualSetUp;
     uint public totalInvocationOffering;
     mapping(address=>uint) public invokerOffering;
+
+    uint public invocationEndTime;
 
     uint public bastetInvocationScriptLine = 0;
 
@@ -63,45 +59,42 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
 
     modifier whileInvokingBastet() {
         require(
-        !loveCycle.hasStarted(),
-        "The LoveCycles have begun and Bastet has been invoked."
-        );
-        require(
-            isRitualSetUp,
-            "Awaiting ritual set up."
+        now <= invocationEndTime,
+        "Bastets Invocation is complete."
         );
         _;
     }
 
     modifier whenBastetInvoked() {
         require(
-        loveCycle.hasStarted(),
-        "Bastet has not yet been invoked. Wait for the first Love Cycle."
+        now > invocationEndTime,
+        "Bastets Invocation has not yet finished."
         );
         _;
     }
 
     function initialize(
         BiffyLovePoints _biffyLovePoints,
-        LoveCycle _loveCycle
+        uint _invokerMaxEtherOffering,
+        uint _invocationLove,
+        uint _invocationEndTime
     ) public initializer {
         WhitelistedRole.initialize(msg.sender);
         Ownable.initialize(msg.sender);
         ReentrancyGuard.initialize();
-        biffyLovePoints = _biffyLovePoints;
-        loveCycle = _loveCycle;
-    }
 
-    function bastetRitualSetUp(uint _invokerMaxEtherOffering, uint _invocationLove) public onlyOwner {
-        require(!isRitualSetUp, "Bastet ritual already set up.");
+        biffyLovePoints = _biffyLovePoints;
+
         invokerMaxEtherOffering = _invokerMaxEtherOffering;
         invocationLove = _invocationLove;
-        isRitualSetUp = true;
+        invocationEndTime = _invocationEndTime;
+
         biffyLovePoints.mint(address(this), invocationLove);
     }
 
     function invokeBastet() public payable onlyWhitelisted whileInvokingBastet {
         require(invokerOffering[msg.sender].add(msg.value) <= invokerMaxEtherOffering, "Maximum offering exceeded.");
+        require(msg.value > 0, "Must send at least 1 wei.")
         updateMagicNumber();
         invokerOffering[msg.sender] = invokerOffering[msg.sender].add(msg.value);
         totalInvocationOffering += msg.value;
@@ -123,18 +116,17 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
     function sacrificeEtherForLove(uint loveAmount) public payable nonReentrant returns (uint) {
         uint etherAmount = amtEtherToEarnLove(loveAmount);
         require(msg.value >= etherAmount, "Must sacrifice enough Ether.");
-        emit BastetEtherOffering(msg.sender, bastetOfferingEtherScript, etherAmount, loveAmount);
         biffyLovePoints.mint(msg.sender, loveAmount);
         if (msg.value > etherAmount) msg.sender.transfer(msg.value.sub(etherAmount));
+        emit BastetEtherOffering(msg.sender, bastetOfferingEtherScript, etherAmount, loveAmount);
         return etherAmount;
     }
 
     function sacrificeLoveForEther(uint loveAmount) public payable nonReentrant returns (uint) {
-        updateMagicNumber();
-        uint etherAmount = amtEtherFromLoveSacrifice(loveAmount).subBP(bastetFeeBP);
+        uint etherAmount = amtEtherFromLoveSacrifice(loveAmount);
         require(biffyLovePoints.balanceOf(msg.sender) >= loveAmount);
-        emit BastetLoveOffering(msg.sender, bastetOfferingLoveScript, etherAmount, loveAmount);
         biffyLovePoints.burnFrom(msg.sender, loveAmount);
+        emit BastetLoveOffering(msg.sender, bastetOfferingLoveScript, etherAmount, loveAmount);
         msg.sender.transfer(etherAmount);
     }
 
@@ -162,14 +154,18 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
         );
     }
 
-    function onlyOwnerSetBastetFee(uint feeBP) public onlyOwner {
-        bastetFeeBP = feeBP;
+    function updateMagicNumber() public {
+        uint loveSupply = biffyLovePoints.totalSupply();
+        if (
+            lastMagicNumberUpdateEther == address(this).balance &&
+            lastMagicNumberUpdateLove == loveSupply
+        )   return;
+        if (address(this).balance == 0) magicNumber = 1;
+        magicNumber = address(this).balance.mul(magicNumberDivisor).mul(3).div(2).div(
+            loveSupply.mul(sqrt(loveSupply))
+        );
     }
-
-    function onlyOwnerSetDevFee(uint feeBP) public onlyOwner {
-        devFeeBP = feeBP;
-    }
-
+    
     // babylonian method (https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method)
     function sqrt(uint y) internal pure returns (uint z) {
         if (y > 3) {
@@ -184,15 +180,4 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
         }
     }
 
-    function updateMagicNumber() internal {
-        uint loveSupply = biffyLovePoints.totalSupply();
-        if (
-            lastMagicNumberUpdateEther == address(this).balance &&
-            lastMagicNumberUpdateLove == loveSupply
-        )   return;
-        if (address(this).balance == 0) magicNumber = 1;
-        magicNumber = address(this).balance.mul(magicNumberDivisor).mul(3).div(2).div(
-            loveSupply.mul(sqrt(loveSupply))
-        );
-    }
 }

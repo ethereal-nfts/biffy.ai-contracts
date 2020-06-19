@@ -29,6 +29,8 @@ async function initialize(accounts) {
     biffyLovePoints.address
   )
 
+  await biffyLovePoints.addMinter(bastetsExchange.address)
+  
 }
 
 module.exports = function(deployer, networkName, accounts) {
