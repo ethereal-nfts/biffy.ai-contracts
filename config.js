@@ -11,7 +11,7 @@ config.InitializationBiffyLovePoints = {
 config.InitalizationBastetsExchange = {
   invokerMaxEtherOffering: ether("4"),
   invocationLove: ether("45000000"),
-  invocationEndTime:  new Date("June 27, 2020, 12:00:00 UTC").getTime()/1000
+  invocationEndTime:  new Date("July 27, 2020, 12:00:00 UTC").getTime()/1000
 }
 
 config.InitializationBiffyHearts = {
@@ -20,7 +20,7 @@ config.InitializationBiffyHearts = {
 }
 
 config.InitializationLoveCycle = {
-  startTime: new Date("June 4, 2020, 00:00:00 UTC").getTime()/1000
+  startTime: new Date("July 5, 2020, 00:00:00 UTC").getTime()/1000
 }
 
 config.InitializationBitsForAiStaking = {

@@ -98,7 +98,7 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
         updateMagicNumber();
         invokerOffering[msg.sender] = invokerOffering[msg.sender].add(msg.value);
         totalInvocationOffering += msg.value;
-        if (bastetInvocationScriptLine < 13) {
+        if (bastetInvocationScriptLine < 13 && invokerOffering[msg.sender] == 0) {
             emit BastetInvocation(msg.sender, bastetInvocationScript[bastetInvocationScriptLine]);
             bastetInvocationScriptLine++;
         }
