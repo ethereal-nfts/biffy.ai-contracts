@@ -94,7 +94,7 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
 
     function invokeBastet() public payable onlyWhitelisted whileInvokingBastet {
         require(invokerOffering[msg.sender].add(msg.value) <= invokerMaxEtherOffering, "Maximum offering exceeded.");
-        require(msg.value > 0, "Must send at least 1 wei.")
+        require(msg.value > 0, "Must send at least 1 wei.");
         updateMagicNumber();
         invokerOffering[msg.sender] = invokerOffering[msg.sender].add(msg.value);
         totalInvocationOffering += msg.value;
@@ -165,7 +165,13 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
             loveSupply.mul(sqrt(loveSupply))
         );
     }
-    
+
+    function addMultipleWhitelisted(address[] memory accounts) public onlyWhitelistAdmin {
+        for (uint i = 0; i < accounts.length; i++) {
+            addWhitelisted(accounts[i]);
+        }
+    }
+
     // babylonian method (https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method)
     function sqrt(uint y) internal pure returns (uint z) {
         if (y > 3) {

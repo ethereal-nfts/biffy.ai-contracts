@@ -8,6 +8,12 @@ config.InitializationBiffyLovePoints = {
   decimals:18
 }
 
+config.InitalizationBastetsExchange = {
+  invokerMaxEtherOffering: ether("4"),
+  invocationLove: ether("45000000"),
+  invocationEndTime:  new Date("June 27, 2020, 12:00:00 UTC").getTime()/1000
+}
+
 config.InitializationBiffyHearts = {
   name:"BiffyHearts",
   symbol:"BHRT"

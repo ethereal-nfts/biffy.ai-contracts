@@ -18,8 +18,12 @@ contract BitsForAiStaking is Initializable {
     IERC721 private bitsForAi;
     LoveCycle private loveCycle;
 
-    uint private rewardPerBits;
+    uint private rewardBase;
     uint private rewardDecayBP;
+
+//TODO: remove
+    uint private rewardBpOfTotalLove;
+    uint private base;
 
     uint public totalStakingShares;
     uint public totalStakingNew;
