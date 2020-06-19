@@ -42,6 +42,8 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
         "And let your blessings lie upon us."
     ];
 
+    string public bastetInvocationScriptAffirmation = "And so we ask as well.";
+
     uint public magicNumber;
     uint public magicNumberDivisor = 1 ether;
 
@@ -98,10 +100,15 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
         updateMagicNumber();
         invokerOffering[msg.sender] = invokerOffering[msg.sender].add(msg.value);
         totalInvocationOffering += msg.value;
-        if (bastetInvocationScriptLine < 13 && invokerOffering[msg.sender] == 0) {
-            emit BastetInvocation(msg.sender, bastetInvocationScript[bastetInvocationScriptLine]);
-            bastetInvocationScriptLine++;
+        if (invokerOffering[msg.sender] == 0) {
+            if (bastetInvocationScriptLine < 13) {
+                emit BastetInvocation(msg.sender, bastetInvocationScript[bastetInvocationScriptLine]);
+                bastetInvocationScriptLine++;
+            } else {
+                emit BastetInvocation(msg.sender, bastetInvocationScriptAffirmation)
+            }
         }
+
         emit BastetInvocationEtherOffering(msg.sender, bastetOfferingEtherScript, msg.value);
     }
 
