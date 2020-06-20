@@ -24,13 +24,19 @@ async function initialize(accounts) {
     loveParams.pausers.map((index)=>accounts[index])
   )
 
+  const bastetParams = config.InitalizationBastetsExchange
   const bastetsExchange = await BastetsExchange.deployed()
-  await bastetsExchange.initialize(
-    biffyLovePoints.address
-  )
 
   await biffyLovePoints.addMinter(bastetsExchange.address)
-  
+
+  await bastetsExchange.initialize(
+    biffyLovePoints.address,
+    bastetParams.invokerMaxEtherOffering,
+    bastetParams.invocationLove,
+    bastetParams.invocationEndTime
+  )
+
+
 }
 
 module.exports = function(deployer, networkName, accounts) {

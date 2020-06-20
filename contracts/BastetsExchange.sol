@@ -120,7 +120,7 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
         emit BastetInvocationLoveClaim(msg.sender, loveClaim);
     }
 
-    function sacrificeEtherForLove(uint loveAmount) public payable nonReentrant returns (uint) {
+    function sacrificeEtherForLove(uint loveAmount) public payable nonReentrant whenBastetInvoked returns (uint) {
         uint etherAmount = amtEtherToEarnLove(loveAmount);
         require(msg.value >= etherAmount, "Must sacrifice enough Ether.");
         biffyLovePoints.mint(msg.sender, loveAmount);
@@ -129,7 +129,7 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
         return etherAmount;
     }
 
-    function sacrificeLoveForEther(uint loveAmount) public payable nonReentrant returns (uint) {
+    function sacrificeLoveForEther(uint loveAmount) public payable nonReentrant whenBastetInvoked returns (uint) {
         uint etherAmount = amtEtherFromLoveSacrifice(loveAmount);
         require(biffyLovePoints.balanceOf(msg.sender) >= loveAmount);
         biffyLovePoints.burnFrom(msg.sender, loveAmount);
@@ -137,7 +137,7 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
         msg.sender.transfer(etherAmount);
     }
 
-    function getEtherLoveRate() public view returns (uint) {
+    function getEtherLoveRate() public view returns (uint) whenBastetInvoked {
         return magicNumber.mul(sqrt(biffyLovePoints.totalSupply()));
     }
 

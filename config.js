@@ -20,7 +20,7 @@ config.InitializationBiffyHearts = {
 }
 
 config.InitializationLoveCycle = {
-  startTime: new Date("July 5, 2020, 00:00:00 UTC").getTime()/1000
+  startTime: new Date("July 5, 2020, 04:44:00 UTC").getTime()/1000
 }
 
 config.InitializationBitsForAiStaking = {
