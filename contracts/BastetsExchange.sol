@@ -45,7 +45,7 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
     string public bastetInvocationScriptAffirmation = "And so we ask as well.";
 
     uint public magicNumber;
-    uint public magicNumberDivisor = 1 ether;
+    uint public magicNumberDivisor = 1e36;
 
     uint public lastMagicNumberUpdateEther;
     uint public lastMagicNumberUpdateLove;
@@ -97,15 +97,15 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
     function invokeBastet() public payable onlyWhitelisted whileInvokingBastet {
         require(invokerOffering[msg.sender].add(msg.value) <= invokerMaxEtherOffering, "Maximum offering exceeded.");
         require(msg.value > 0, "Must send at least 1 wei.");
-        updateMagicNumber();
         invokerOffering[msg.sender] = invokerOffering[msg.sender].add(msg.value);
         totalInvocationOffering += msg.value;
+        updateMagicNumber();
         if (invokerOffering[msg.sender] == 0) {
             if (bastetInvocationScriptLine < 13) {
                 emit BastetInvocation(msg.sender, bastetInvocationScript[bastetInvocationScriptLine]);
                 bastetInvocationScriptLine++;
             } else {
-                emit BastetInvocation(msg.sender, bastetInvocationScriptAffirmation)
+                emit BastetInvocation(msg.sender, bastetInvocationScriptAffirmation);
             }
         }
 
@@ -120,56 +120,54 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
         emit BastetInvocationLoveClaim(msg.sender, loveClaim);
     }
 
-    function sacrificeEtherForLove(uint loveAmount) public payable nonReentrant whenBastetInvoked returns (uint) {
-        uint etherAmount = amtEtherToEarnLove(loveAmount);
-        require(msg.value >= etherAmount, "Must sacrifice enough Ether.");
+    function sacrificeWeiForLove(uint loveAmount) public payable nonReentrant whenBastetInvoked returns (uint) {
+        uint weiAmount = sendWeiEarnLoveAmt(loveAmount);
+        require(msg.value >= weiAmount, "Must sacrifice enough Ether.");
         biffyLovePoints.mint(msg.sender, loveAmount);
-        if (msg.value > etherAmount) msg.sender.transfer(msg.value.sub(etherAmount));
-        emit BastetEtherOffering(msg.sender, bastetOfferingEtherScript, etherAmount, loveAmount);
-        return etherAmount;
+        if (msg.value > weiAmount) msg.sender.transfer(msg.value.sub(weiAmount));
+        emit BastetEtherOffering(msg.sender, bastetOfferingEtherScript, weiAmount, loveAmount);
+        return weiAmount;
     }
 
-    function sacrificeLoveForEther(uint loveAmount) public payable nonReentrant whenBastetInvoked returns (uint) {
-        uint etherAmount = amtEtherFromLoveSacrifice(loveAmount);
+    function sacrificeLoveForWei(uint loveAmount) public payable nonReentrant whenBastetInvoked returns (uint) {
+        uint weiAmount = sendLoveEarnWeiAmt(loveAmount);
         require(biffyLovePoints.balanceOf(msg.sender) >= loveAmount);
         biffyLovePoints.burnFrom(msg.sender, loveAmount);
-        emit BastetLoveOffering(msg.sender, bastetOfferingLoveScript, etherAmount, loveAmount);
-        msg.sender.transfer(etherAmount);
+        emit BastetLoveOffering(msg.sender, bastetOfferingLoveScript, weiAmount, loveAmount);
+        msg.sender.transfer(weiAmount);
     }
 
-    function getEtherLoveRate() public view returns (uint) whenBastetInvoked {
-        return magicNumber.mul(sqrt(biffyLovePoints.totalSupply()));
+    function getWeiPerLove() public view returns (uint) {
+        return magicNumber.mul(sqrt(biffyLovePoints.totalSupply())).div(1e18);
     }
 
-    function amtEtherFromLoveSacrifice(uint loveAmount) public view returns (uint) {
+    function sendLoveEarnWeiAmt(uint loveAmount) public view returns (uint) {
         uint loveSupply = biffyLovePoints.totalSupply();
         uint loveSupplyFinal = loveSupply.sub(loveAmount);
-        return magicNumber.mul(2).div(3).mul(
-            loveSupply.mul(sqrt(loveSupply)).sub(
+        uint weiAmt = address(this).balance.sub(
+            magicNumber.mul(2).mul(
                 loveSupplyFinal.mul(sqrt(loveSupplyFinal))
-            )
+            ).div(3).div(magicNumberDivisor)
         );
+        require(weiAmt < address(this).balance, "Cannot get more ether than is in contract.");
+        return weiAmt;
     }
 
-    function amtEtherToEarnLove(uint loveAmount) public view returns (uint) {
+    function sendWeiEarnLoveAmt(uint loveAmount) public view returns (uint) {
         uint loveSupply = biffyLovePoints.totalSupply();
         uint loveSupplyFinal = loveSupply.add(loveAmount);
-        return magicNumber.mul(2).div(3).mul(
-            loveSupplyFinal.mul(sqrt(loveSupplyFinal)).sub(
-                loveSupply.mul(sqrt(loveSupply))
-            )
+        return magicNumber.mul(2).mul(
+            loveSupplyFinal.mul(sqrt(loveSupplyFinal))
+        ).div(3).div(magicNumberDivisor).sub(
+            address(this).balance
         );
     }
 
     function updateMagicNumber() public {
         uint loveSupply = biffyLovePoints.totalSupply();
-        if (
-            lastMagicNumberUpdateEther == address(this).balance &&
-            lastMagicNumberUpdateLove == loveSupply
-        )   return;
         if (address(this).balance == 0) magicNumber = 1;
-        magicNumber = address(this).balance.mul(magicNumberDivisor).mul(3).div(2).div(
-            loveSupply.mul(sqrt(loveSupply))
+        magicNumber = address(this).balance.mul(magicNumberDivisor).div(
+            loveSupply.mul(2).mul(sqrt(loveSupply)).div(3)
         );
     }
 
