@@ -12,13 +12,14 @@ const whitelist = [
   accounts[1],
   accounts[2],
   accounts[3],
-  accounts[4]
+  accounts[4],
+  accounts[5]
 ]
 const traders = [
-  accounts[5],
-  accounts[6]
+  accounts[6],
+  accounts[7]
 ]
-const nonWhitelist = accounts[7]
+const nonWhitelist = accounts[8]
 
 function sqrt_b (bignum) {
   let z = new BN(0)
@@ -220,6 +221,45 @@ describe("BastetsExchange",function() {
           this.bastetsExchange.invokeBastet({from:whitelist[0]}),
           "Bastets Invocation is complete."
         )
+      })
+    })
+    describe("#claimInvocationLove",function () {
+      it("should revert if invoker not whitelisted", async function () {
+        await expectRevert(
+          this.bastetsExchange.claimInvocationLove({from:nonWhitelist}),
+          "WhitelistedRole: caller does not have the Whitelisted role"
+        )
+      })
+      it("should revert if invoker never sent Ether", async function () {
+        await expectRevert(
+          this.bastetsExchange.claimInvocationLove({from:whitelist[4]}),
+          "Invoker has no Love claim remaining."
+        )
+      })
+      it("should increase invoker's Love by ratio of ether sent", async function () {
+        const invoker = whitelist[0]
+        const invokerOffering = await this.bastetsExchange.invokerOffering(invoker)
+        const totalOffering = await this.bastetsExchange.totalInvocationOffering()
+        const calcLove = invokerOffering.mul(config.InitalizationBastetsExchange.invocationLove).div(totalOffering)
+        await this.bastetsExchange.claimInvocationLove({from:invoker})
+        const contractLove = await this.biffyLovePoints.balanceOf(invoker)
+        expect(contractLove.toString()).to.not.equal("0")
+        expect(contractLove.toString())
+          .to.equal(calcLove.toString())
+      })
+      it("should revert if invoker previously claimed.", async function () {
+        await expectRevert(
+          this.bastetsExchange.claimInvocationLove({from:whitelist[0]}),
+          "Invoker has no Love claim remaining."
+        )
+      })
+      it("should allow all invokers to withdraw their Love.", async function () {
+        for(let i=1; i<4; i++){
+          await this.bastetsExchange.claimInvocationLove({from:whitelist[i]})
+        }
+        const bastetLoveBalance = await this.biffyLovePoints.balanceOf(this.bastetsExchange.address)
+        console.log(bastetLoveBalance.toString())
+        expect(bastetLoveBalance.toNumber()).to.be.below(whitelist.length)
       })
     })
   })
