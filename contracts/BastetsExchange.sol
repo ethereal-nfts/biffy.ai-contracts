@@ -47,9 +47,6 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
     uint public magicNumber;
     uint public magicNumberDivisor = 1e36;
 
-    uint public lastMagicNumberUpdateEther;
-    uint public lastMagicNumberUpdateLove;
-
     string public bastetOfferingEtherScript = "I offer this Ether to you, Daughter of Ra.";
     string public bastetOfferingLoveScript = "I offer this Love to you, Queen of Cats.";
 
