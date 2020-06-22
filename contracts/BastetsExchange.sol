@@ -111,7 +111,7 @@ contract BastetsExchange is Initializable, WhitelistedRole, Ownable, ReentrancyG
 
     function claimInvocationLove() public onlyWhitelisted whenBastetInvoked {
         require(invokerOffering[msg.sender] > 0, "Invoker has no Love claim remaining.");
-        uint loveClaim = totalInvocationOffering.mul(invocationLove).div(invokerOffering[msg.sender]);
+        uint loveClaim = invokerOffering[msg.sender].mul(invocationLove).div(totalInvocationOffering);
         invokerOffering[msg.sender] = 0;
         biffyLovePoints.transfer(msg.sender, loveClaim);
         emit BastetInvocationLoveClaim(msg.sender, loveClaim);
