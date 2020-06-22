@@ -94,13 +94,13 @@ describe("BastetsExchange",function() {
       it("should increase totalInvokerOffering by value", async function () {
         let invoker = whitelist[1]
         const intitialTotalInvocationOffering = await this.bastetsExchange.totalInvocationOffering()
-        await this.bastetsExchange.invokeBastet({from:invoker, value:ether("2")})
+        await this.bastetsExchange.invokeBastet({from:invoker, value:ether("1.1")})
         const firstTotalInvocationOffering = await this.bastetsExchange.totalInvocationOffering()
-        expect((firstTotalInvocationOffering-ether("2")).toString())
+        expect((firstTotalInvocationOffering-ether("1.1")).toString())
           .to.equal(intitialTotalInvocationOffering.toString())
-        await this.bastetsExchange.invokeBastet({from:invoker, value:config.InitalizationBastetsExchange.invokerMaxEtherOffering-ether("2")})
+        await this.bastetsExchange.invokeBastet({from:invoker, value:ether("1.13")})
         const secondTotalInvocationOffering = await this.bastetsExchange.totalInvocationOffering()
-        expect((firstTotalInvocationOffering.add(config.InitalizationBastetsExchange.invokerMaxEtherOffering).sub(ether("2"))).toString())
+        expect((firstTotalInvocationOffering.add(ether("1.13"))).toString())
           .to.equal(secondTotalInvocationOffering.toString())
       })
     })
@@ -153,7 +153,6 @@ describe("BastetsExchange",function() {
     describe("#getWeiPerLove",function() {
       it("should be `c*sqrt(x)`", async function () {
         const magicNumber = await this.bastetsExchange.magicNumber()
-        const magicNumberDivisor = await this.bastetsExchange.magicNumberDivisor()
         const love = await this.biffyLovePoints.totalSupply()
         const calcRate = magicNumber.mul(sqrt_b(love)).div(ether("1"))
         const contractRate = await this.bastetsExchange.getWeiPerLove()
@@ -200,6 +199,27 @@ describe("BastetsExchange",function() {
           .to.not.equal((new BN(0)).toString())
         expect(dEtherContract.toString())
           .to.equal(dEtherCalc.toString())
+      })
+    })
+  })
+  describe("State: Exchange",function(){
+    before(async function(){
+      await Promise.all([
+        this.bastetsExchange.invokeBastet({from:whitelist[2], value:ether("1")}),
+        this.bastetsExchange.invokeBastet({from:whitelist[3], value:17}),
+      ])
+      await time.advanceBlock()
+      let latest = await time.latest()
+      let dTime = config.InitalizationBastetsExchange.invocationEndTime + 1 - latest
+      await time.increase(dTime)
+      await time.advanceBlock()
+    })
+    describe("#invokeBastet", function () {
+      it("should revert", async function () {
+        await expectRevert(
+          this.bastetsExchange.invokeBastet({from:whitelist[0]}),
+          "Bastets Invocation is complete."
+        )
       })
     })
   })
