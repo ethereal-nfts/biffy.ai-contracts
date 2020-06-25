@@ -164,18 +164,19 @@ describe("BastetsExchange",function() {
       })
     })
     describe("#sendLoveEarnWeiAmt",function() {
-      it("should be `dE=E-(2/3)*c*x*sqrt(x)`", async function () {
+      it("should be `dE=(2/3)*c*x*sqrt(x)-(2/3)*c*x'*sqrt(x')`", async function () {
         const dx = ether("4")
         const magicNumber = await this.bastetsExchange.magicNumber()
         const magicNumberDivisor = await this.bastetsExchange.magicNumberDivisor()
-        const etherBal = await balance.current(this.bastetsExchange.address)
         const love = await this.biffyLovePoints.totalSupply()
         const finalLove = love.sub(dx)
-        const dEtherCalc = etherBal.sub(
+        const dEtherCalc =
           magicNumber.mul(new BN(2)).mul(
-            finalLove.mul(sqrt_b(finalLove))
+            love.mul(sqrt_b(love)).sub(
+              finalLove.mul(sqrt_b(finalLove))
+            )
           ).div(new BN(3)).div(magicNumberDivisor)
-        )
+
         const dEtherContract = await this.bastetsExchange.sendLoveEarnWeiAmt(dx)
         expect(dEtherContract.toString())
           .to.not.equal((new BN(0)).toString())
@@ -184,17 +185,18 @@ describe("BastetsExchange",function() {
       })
     })
     describe("#sendWeiEarnLoveAmt",function() {
-      it("should be `dE=E-(2/3)*c*x*sqrt(x)`", async function () {
+      it("dE=(2/3)*c*x'*sqrt(x')-(2/3)*c*x*sqrt(x)`", async function () {
         const dx = ether("4")
         const magicNumber = await this.bastetsExchange.magicNumber()
         const magicNumberDivisor = await this.bastetsExchange.magicNumberDivisor()
-        const etherBal = await balance.current(this.bastetsExchange.address)
         const love = await this.biffyLovePoints.totalSupply()
         const finalLove = love.add(dx)
-        const dEtherCalc = magicNumber.mul(new BN(2)).mul(
-          finalLove.mul(sqrt_b(finalLove))
-        ).div(new BN(3)).div(magicNumberDivisor)
-          .sub(etherBal)
+        const dEtherCalc =
+          magicNumber.mul(new BN(2)).mul(
+            finalLove.mul(sqrt_b(finalLove)).sub(
+              love.mul(sqrt_b(love))
+            )
+          ).div(new BN(3)).div(magicNumberDivisor)
         const dEtherContract = await this.bastetsExchange.sendWeiEarnLoveAmt(dx)
         expect(dEtherContract.toString())
           .to.not.equal((new BN(0)).toString())
@@ -261,6 +263,28 @@ describe("BastetsExchange",function() {
         console.log(bastetLoveBalance.toString())
         expect(bastetLoveBalance.toNumber()).to.be.below(whitelist.length)
       })
+    })
+    describe("#sacrificeWeiForLove",function () {
+      it("should revert if 0 Love requested.", async function() {
+        await expectRevert(
+          this.bastetsExchange.sacrificeWeiForLove("0",{from:nonWhitelist,value:ether("0")}),
+          "Love must be at least 1 wei."
+        )
+      })
+      it("should revert if less Ether sent than required", async function() {
+        const loveAmount = ether("1.3")
+        const requiredWei = await this.bastetsExchange.sendWeiEarnLoveAmt(loveAmount)
+        let sub = 1
+        await expectRevert(
+          this.bastetsExchange.sacrificeWeiForLove(loveAmount,{from:nonWhitelist,value:requiredWei.sub(new BN(sub))}),
+          "Must sacrifice enough Ether."
+        )
+        await expectRevert(
+          this.bastetsExchange.sacrificeWeiForLove(loveAmount,{from:nonWhitelist,value:"1"}),
+          "Must sacrifice enough Ether."
+        )
+      })
+      //need additional tests
     })
   })
 })
