@@ -6,7 +6,8 @@
     "BiffyLovePoints": "BiffyLovePoints",
     "BitsForAiStaking": "BitsForAiStaking",
     "LoveCycle": "LoveCycle",
-    "MockBitsForAi": "MockBitsForAi"
+    "MockBitsForAi": "MockBitsForAi",
+    "BastetsExchange": "BastetsExchange"
   },
   "dependencies": {
     "@openzeppelin/contracts-ethereum-package": "^2.5.0"

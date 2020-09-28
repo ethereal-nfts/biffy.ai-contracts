@@ -276,15 +276,24 @@ describe("BastetsExchange",function() {
         const requiredWei = await this.bastetsExchange.sendWeiEarnLoveAmt(loveAmount)
         let sub = 1
         await expectRevert(
-          this.bastetsExchange.sacrificeWeiForLove(loveAmount,{from:nonWhitelist,value:requiredWei.sub(new BN(sub))}),
+          this.bastetsExchange.sacrificeWeiForLove(loveAmount,{from:traders[0],value:requiredWei.sub(new BN(sub))}),
           "Must sacrifice enough Ether."
         )
         await expectRevert(
-          this.bastetsExchange.sacrificeWeiForLove(loveAmount,{from:nonWhitelist,value:"1"}),
+          this.bastetsExchange.sacrificeWeiForLove(loveAmount,{from:traders[0],value:"1"}),
           "Must sacrifice enough Ether."
         )
       })
-      //need additional tests
+      it("should increase love balance of sender.", async function() {
+        const trader = traders[0]
+        const startingLoveBalance = await this.biffyLovePoints.balanceOf(trader)
+        const loveAmount = ether("12000000")
+        const requiredWei = await this.bastetsExchange.sendWeiEarnLoveAmt(loveAmount)
+        await this.bastetsExchange.sacrificeWeiForLove(loveAmount,{from:trader,value:requiredWei})
+        const endingLoveBalance = await this.biffyLovePoints.balanceOf(trader)
+        expect(endingLoveBalance.toString())
+          .to.equal(startingLoveBalance.add(loveAmount).toString())
+      })
     })
   })
 })

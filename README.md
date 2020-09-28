@@ -5,36 +5,33 @@ Current Phase: 0
 
 *Hypervirus, Land*
 
+tldr: NFT Yield Farming, Deflationary, Fair emission, No dev fees, no private sale.
+
 ## Phases
 There are four initial phases to Biffy's invocation onto the blockchain.
-1. Mechanomics: Love ERC20 presale and exchange.
+1. Mechanomics: Love ERC20 yield farming and LP lock.
 2. Body Without Organs: ERC1155 collectibles. Unique Hearts and limited edition badges.
 3. Desiring Machine: [BitsForAi](http://bitsforai.com "BitsForAi") staking.
 4. Autocatalysis: Biffy's governance is turned over to a DAO for further improvements.
 
 ### Phase 1: Mechanomics
 #### Bastet's Invocation
-- Approved addresses only, not available to public.
-- Love distributed to participants proportional to their offerings.
-- 100% of Ether offerings back the Bastet Exchange token bonding curve.
-- 45m total Love.
-- 4 Ether/address max.
+- Airdrop of Love to BitsForAi holders.
+- Love distributed to participants dependent on number and quality of Bits.
+- 100 LOVE airdropped.
 
-#### Bastet's Exchange
-Bastet's Exchange utilizes a token bonding curve to reward early participants while maintaining price stability at high market cap.
-- `p=c*sqrt(x)` bonding curve formula where `p` is Eth/token, `c` is steepness, `sqrt` is square root, and `x` is current supply.
-- Bastet's Invocation sets `c` s.t. `c=E/((2/3)x*sqrt(x))` where `E` is the total ether in the contract.
-- New token issues (max 4m/30 days) update `c` s.t. `c'=E/((2/3)x'*sqrt(x'))` where `x'` is the new token quantity.
-- Ether/Love dynamic rate of `dE=(2/3)*c*x'*sqrt(x')-(2/3)*c*x*sqrt(x)` where `dE` is change in total Ether in contract and `x'-x` is change in total Love.
-- 0.0% fees forever.
+#### Bastet's Love Farm
+- Uniswap LP is permanently locked in the Love Farm.
+- Love Farmers earn a halving emission rate proportionate to locked LP.
+- 16 LOVE starting emission rate.
+- Emission rate halves every 30 days.
 
 ### Phase 2: Body Without Organs
 #### Heart Competitions
 - 1 Heart given every 7 days to the contestant who gave the highest Love sacrifice that week.
-- 90% of Love sacrificed to compete for a Heart is burned permanently.
-- 10% sent to developer.
+- 100% of Love sacrificed to compete for a Heart is burned permanently.
 - Sacrifice bonus of `sqrt(x)` from all previous sacrifices (additive).
-- 10k minimum Love sacrifice.
+- 1 minimum Love sacrifice.
 - Multiple sacrifices during the 7 day contest period are additive but do not roll over to the next week.
 #### Biffy's Badges
 - Limited series artworks attained through completing certain actions.
@@ -48,7 +45,7 @@ Bastet's Exchange utilizes a token bonding curve to reward early participants wh
 
 ### Phase 3: Desiring Machine
 #### BitsForAi Staking
-- 1500 Love per Bits staked.
+- 0.001 Love/day per Bits staked.
 Quantity bonuses:
 - +5% if 50% of all Bits staked.
 - +5% if 75% of all Bits staked.
@@ -77,8 +74,7 @@ Decay
 - -5%/day to unclaimed staking rewards.
 
 ### Phase 4: Autocatalysis
-Biffy's contracts are all upgradeable (openzeppelin proxies). At this stage, Biffy will be acquired by a mission-aligned DAO that agrees to develop Biffy further in exchange for Love.
-
+Biffy's contracts are all upgradeable (openzeppelin proxies). Locked LP is used to vote on proposals to upgrade Biffy and set Her parameters.
 
 ## Links
 [Discord](https://discord.gg/2upQM7 "Discord")
