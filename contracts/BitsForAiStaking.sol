@@ -1,6 +1,6 @@
 pragma solidity 0.5.17;
 
-import "./BiffyLovePoints.sol";
+import "./BiffysLove.sol";
 import "./LoveCycle.sol";
 import "./library/BasisPoints.sol";
 
@@ -14,7 +14,7 @@ contract BitsForAiStaking is Initializable {
     using BasisPoints for uint;
     using SafeMath for uint;
 
-    BiffyLovePoints private biffyLovePoints;
+    BiffysLove private biffyLovePoints;
     IERC721 private bitsForAi;
     LoveCycle private loveCycle;
 
@@ -36,7 +36,7 @@ contract BitsForAiStaking is Initializable {
     mapping(uint => mapping(uint => uint )) public bitsCycleClaimedAmount;
 
     function initialize(
-        BiffyLovePoints _biffyLovePoints,
+        BiffysLove _biffyLovePoints,
         IERC721 _bitsForAi,
         LoveCycle _loveCycle,
         uint _rewardBase,
