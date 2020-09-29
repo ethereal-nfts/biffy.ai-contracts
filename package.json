@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "@openzeppelin/contracts-ethereum-package": "^2.5.0",
+    "@truffle/hdwallet-provider": "^1.1.0",
     "core-util-is": "^1.0.2",
     "multi-token-standard": "^0.9.4",
     "truffle": "^5.1.24"

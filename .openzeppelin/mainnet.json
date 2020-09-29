@@ -1,0 +1,240 @@
+{
+  "contracts": {
+    "BiffysLove": {
+      "address": "0xe9dC43d350EF92f7cf5B9FCbC08Bc2fD8ed2F514",
+      "constructorCode": "6080604052612c56806100136000396000f3fe",
+      "bodyBytecodeHash": "3c95705612e851332f4c52ce3632efdbba422edbea5755849ed8b4dc5256aea3",
+      "localBytecodeHash": "302909f64dfc9eeae5402d059c5795a86a594f5f73595c9ee663309331641ca4",
+      "deployedBytecodeHash": "302909f64dfc9eeae5402d059c5795a86a594f5f73595c9ee663309331641ca4",
+      "types": {
+        "t_bool": {
+          "id": "t_bool",
+          "kind": "elementary",
+          "label": "bool"
+        },
+        "t_uint256": {
+          "id": "t_uint256",
+          "kind": "elementary",
+          "label": "uint256"
+        },
+        "t_array:50<t_uint256>": {
+          "id": "t_array:50<t_uint256>",
+          "valueType": "t_uint256",
+          "length": "50",
+          "kind": "array",
+          "label": "uint256[50]"
+        },
+        "t_mapping<t_uint256>": {
+          "id": "t_mapping<t_uint256>",
+          "valueType": "t_uint256",
+          "label": "mapping(key => uint256)",
+          "kind": "mapping"
+        },
+        "t_struct<Roles.Role>": {
+          "id": "t_struct<Roles.Role>",
+          "kind": "struct",
+          "label": "Roles.Role",
+          "members": [
+            {
+              "label": "bearer",
+              "astId": 1872,
+              "type": "t_mapping<t_bool>",
+              "src": "150:32:11"
+            }
+          ]
+        },
+        "t_mapping<t_bool>": {
+          "id": "t_mapping<t_bool>",
+          "valueType": "t_bool",
+          "label": "mapping(key => bool)",
+          "kind": "mapping"
+        },
+        "t_string": {
+          "id": "t_string",
+          "kind": "elementary",
+          "label": "string"
+        },
+        "t_uint8": {
+          "id": "t_uint8",
+          "kind": "elementary",
+          "label": "uint8"
+        },
+        "t_address": {
+          "id": "t_address",
+          "kind": "elementary",
+          "label": "address"
+        }
+      },
+      "storage": [
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initialized",
+          "astId": 5231,
+          "type": "t_bool",
+          "src": "757:24:37"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initializing",
+          "astId": 5233,
+          "type": "t_bool",
+          "src": "876:25:37"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "______gap",
+          "astId": 5295,
+          "type": "t_array:50<t_uint256>",
+          "src": "1982:29:37"
+        },
+        {
+          "contract": "ERC20",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20.sol",
+          "label": "_balances",
+          "astId": 2817,
+          "type": "t_mapping<t_uint256>",
+          "src": "1418:46:21"
+        },
+        {
+          "contract": "ERC20",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20.sol",
+          "label": "_allowances",
+          "astId": 2823,
+          "type": "t_mapping<t_uint256>",
+          "src": "1471:69:21"
+        },
+        {
+          "contract": "ERC20",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20.sol",
+          "label": "_totalSupply",
+          "astId": 2825,
+          "type": "t_uint256",
+          "src": "1547:28:21"
+        },
+        {
+          "contract": "ERC20",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20.sol",
+          "label": "______gap",
+          "astId": 3209,
+          "type": "t_array:50<t_uint256>",
+          "src": "8172:29:21"
+        },
+        {
+          "contract": "MinterRole",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\access\\roles\\MinterRole.sol",
+          "label": "_minters",
+          "astId": 1969,
+          "type": "t_struct<Roles.Role>",
+          "src": "327:27:12"
+        },
+        {
+          "contract": "MinterRole",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\access\\roles\\MinterRole.sol",
+          "label": "______gap",
+          "astId": 2069,
+          "type": "t_array:50<t_uint256>",
+          "src": "1193:29:12"
+        },
+        {
+          "contract": "ERC20Mintable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20Mintable.sol",
+          "label": "______gap",
+          "astId": 3366,
+          "type": "t_array:50<t_uint256>",
+          "src": "831:29:24"
+        },
+        {
+          "contract": "ERC20Detailed",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20Detailed.sol",
+          "label": "_name",
+          "astId": 3261,
+          "type": "t_string",
+          "src": "224:20:23"
+        },
+        {
+          "contract": "ERC20Detailed",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20Detailed.sol",
+          "label": "_symbol",
+          "astId": 3263,
+          "type": "t_string",
+          "src": "250:22:23"
+        },
+        {
+          "contract": "ERC20Detailed",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20Detailed.sol",
+          "label": "_decimals",
+          "astId": 3265,
+          "type": "t_uint8",
+          "src": "278:23:23"
+        },
+        {
+          "contract": "ERC20Detailed",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20Detailed.sol",
+          "label": "______gap",
+          "astId": 3317,
+          "type": "t_array:50<t_uint256>",
+          "src": "1654:29:23"
+        },
+        {
+          "contract": "ERC20Burnable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\token\\ERC20\\ERC20Burnable.sol",
+          "label": "______gap",
+          "astId": 3250,
+          "type": "t_array:50<t_uint256>",
+          "src": "761:29:22"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
+          "label": "_owner",
+          "astId": 2684,
+          "type": "t_address",
+          "src": "526:22:20"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
+          "label": "______gap",
+          "astId": 2797,
+          "type": "t_array:50<t_uint256>",
+          "src": "2471:29:20"
+        },
+        {
+          "contract": "BiffysLove",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLove.sol",
+          "label": "minters",
+          "astId": 24,
+          "type": "t_mapping<t_bool>",
+          "src": "544:40:1"
+        }
+      ],
+      "warnings": {
+        "hasConstructor": false,
+        "hasSelfDestruct": false,
+        "hasDelegateCall": false,
+        "hasInitialValuesInDeclarations": false,
+        "uninitializedBaseContracts": []
+      }
+    }
+  },
+  "solidityLibs": {},
+  "proxies": {
+    "Biffy.ai/BiffysLove": [
+      {
+        "address": "0xBc2aE707132DE00C3cD17D27c8439d4b5b2ee209",
+        "version": "1.0.0",
+        "implementation": "0xe9dC43d350EF92f7cf5B9FCbC08Bc2fD8ed2F514",
+        "admin": "0x2e605D2d879A45CF3a4E567E55e41ffA9347b2f6",
+        "kind": "Upgradeable"
+      }
+    ]
+  },
+  "manifestVersion": "2.2",
+  "version": "1.0.0",
+  "proxyAdmin": {
+    "address": "0x2e605D2d879A45CF3a4E567E55e41ffA9347b2f6"
+  }
+}
