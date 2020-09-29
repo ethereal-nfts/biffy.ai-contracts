@@ -1,6 +1,14 @@
 #SC builds
 build/contracts
 
+#openzeppeling sessions
+.openzeppelin/.session
+.openzeppelin/dev-*
+
+#secret mnemonic
+mnemonic.js
+privatekey.js
+
 # Logs
 logs
 *.log
@@ -117,3 +125,7 @@ dist
 .yarn/unplugged
 .yarn/build-state.yml
 .pnp.*
+
+.openzeppelin\.session
+
+.vscode

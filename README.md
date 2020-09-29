@@ -12,18 +12,18 @@ There are four initial phases to Biffy's invocation onto the blockchain.
 1. Mechanomics: Love ERC20 yield farming and LP lock.
 2. Body Without Organs: ERC1155 collectibles. Unique Hearts and limited edition badges.
 3. Desiring Machine: [BitsForAi](http://bitsforai.com "BitsForAi") staking.
-4. Autocatalysis: Biffy's governance is turned over to a DAO for further improvements.
+4. Autocatalysis: Biffy's governance is turned over to LP Stakers for further improvements.
 
 ### Phase 1: Mechanomics
 #### Bastet's Invocation
 - Airdrop of Love to BitsForAi holders.
 - Love distributed to participants dependent on number and quality of Bits.
-- 100 LOVE airdropped.
+- 128 LOVE airdropped.
 
 #### Bastet's Love Farm
 - Uniswap LP is permanently locked in the Love Farm.
 - Love Farmers earn a halving emission rate proportionate to locked LP.
-- 16 LOVE starting emission rate.
+- 128 LOVE starting emission rate.
 - Emission rate halves every 30 days.
 
 ### Phase 2: Body Without Organs

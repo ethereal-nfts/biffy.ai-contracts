@@ -185,7 +185,7 @@ contract BiffysLoveFarm is LPTokenWrapper, Ownable {
         }
     }
 
-    modifier checkhalve(){
+    modifier checkhalve() {
         if (block.timestamp >= periodFinish) {
             initreward = initreward.mul(50).div(100);
             biffysLove.mint(address(this), initreward);
