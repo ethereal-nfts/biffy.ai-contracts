@@ -13,7 +13,7 @@ module.exports = {
         return new HDWalletProvider(privateKey, "https://mainnet.infura.io/v3/a07aaaeb8e1c4277a1d9354b5b420548")
       },
       network_id: 1,
-      gasPrice: 81e9,
+      gasPrice: 141e9,
       from: publicKey,
       gas: 8e6
     }
@@ -21,14 +21,14 @@ module.exports = {
 
   compilers: {
     solc: {
-      version: "0.5.16",
+      version: "0.5.17",
       docker: false,
       settings: {
        optimizer: {
          enabled: true,
          runs: 200
        },
-       evmVersion: "byzantium"
+       evmVersion: "istanbul"
       }
     }
   }

@@ -4,8 +4,8 @@
     "BiffysLove": "BiffysLove"
   },
   "dependencies": {},
-  "name": "Biffy.ai",
-  "version": "1.0.0",
+  "name": "biffy.ai",
+  "version": "0.1.0",
   "compiler": {
     "manager": "truffle",
     "compilerSettings": {
