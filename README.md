@@ -18,7 +18,7 @@ There are four initial phases to Biffy's invocation onto the blockchain.
 #### Bastet's Invocation
 - Airdrop of Love to BitsForAi holders.
 - Love distributed to participants dependent on number and quality of Bits.
-- 128 LOVE airdropped.
+- 1024 LOVE airdropped.
 
 #### Bastet's Love Farm
 - Uniswap LP is permanently locked in the Love Farm.
