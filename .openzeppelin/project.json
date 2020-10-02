@@ -1,7 +1,8 @@
 {
   "manifestVersion": "2.2",
   "contracts": {
-    "BiffysLove": "BiffysLove"
+    "BiffysLove": "BiffysLove",
+    "BiffysLoveFarm": "BiffysLoveFarm"
   },
   "dependencies": {},
   "name": "biffy.ai",

@@ -218,6 +218,196 @@
         "hasInitialValuesInDeclarations": false,
         "uninitializedBaseContracts": []
       }
+    },
+    "BiffysLoveFarm": {
+      "address": "0x72aca835263584C68254AA313300D77e7DE99918",
+      "constructorCode": "608060405261130f806100136000396000f3fe",
+      "bodyBytecodeHash": "7efce1ba6aeb134f36dde05a5064a90108d5727ed46f1a869ae6441d87446d8b",
+      "localBytecodeHash": "728f01535688c42ea2c6f0cc2858451fcfda16444d19ac1d37d6ea8c325e6bb7",
+      "deployedBytecodeHash": "728f01535688c42ea2c6f0cc2858451fcfda16444d19ac1d37d6ea8c325e6bb7",
+      "types": {
+        "t_bool": {
+          "id": "t_bool",
+          "kind": "elementary",
+          "label": "bool"
+        },
+        "t_uint256": {
+          "id": "t_uint256",
+          "kind": "elementary",
+          "label": "uint256"
+        },
+        "t_array:50<t_uint256>": {
+          "id": "t_array:50<t_uint256>",
+          "valueType": "t_uint256",
+          "length": "50",
+          "kind": "array",
+          "label": "uint256[50]"
+        },
+        "t_address": {
+          "id": "t_address",
+          "kind": "elementary",
+          "label": "address"
+        },
+        "t_mapping<t_uint256>": {
+          "id": "t_mapping<t_uint256>",
+          "valueType": "t_uint256",
+          "label": "mapping(key => uint256)",
+          "kind": "mapping"
+        }
+      },
+      "storage": [
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initialized",
+          "astId": 5196,
+          "type": "t_bool",
+          "src": "757:24:36"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "initializing",
+          "astId": 5198,
+          "type": "t_bool",
+          "src": "876:25:36"
+        },
+        {
+          "contract": "Initializable",
+          "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
+          "label": "______gap",
+          "astId": 5260,
+          "type": "t_array:50<t_uint256>",
+          "src": "1982:29:36"
+        },
+        {
+          "contract": "LPTokenWrapper",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLoveFarm.sol",
+          "label": "loveLP",
+          "astId": 81,
+          "type": "t_address",
+          "src": "4102:20:2"
+        },
+        {
+          "contract": "LPTokenWrapper",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLoveFarm.sol",
+          "label": "_totalSupply",
+          "astId": 83,
+          "type": "t_uint256",
+          "src": "4149:28:2"
+        },
+        {
+          "contract": "LPTokenWrapper",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLoveFarm.sol",
+          "label": "_balances",
+          "astId": 87,
+          "type": "t_mapping<t_uint256>",
+          "src": "4184:45:2"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
+          "label": "_owner",
+          "astId": 2649,
+          "type": "t_address",
+          "src": "526:22:19"
+        },
+        {
+          "contract": "Ownable",
+          "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
+          "label": "______gap",
+          "astId": 2762,
+          "type": "t_array:50<t_uint256>",
+          "src": "2471:29:19"
+        },
+        {
+          "contract": "BiffysLoveFarm",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLoveFarm.sol",
+          "label": "biffysLove",
+          "astId": 183,
+          "type": "t_address",
+          "src": "5013:31:2"
+        },
+        {
+          "contract": "BiffysLoveFarm",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLoveFarm.sol",
+          "label": "duration",
+          "astId": 185,
+          "type": "t_uint256",
+          "src": "5051:23:2"
+        },
+        {
+          "contract": "BiffysLoveFarm",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLoveFarm.sol",
+          "label": "initreward",
+          "astId": 187,
+          "type": "t_uint256",
+          "src": "5083:25:2"
+        },
+        {
+          "contract": "BiffysLoveFarm",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLoveFarm.sol",
+          "label": "starttime",
+          "astId": 189,
+          "type": "t_uint256",
+          "src": "5115:24:2"
+        },
+        {
+          "contract": "BiffysLoveFarm",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLoveFarm.sol",
+          "label": "periodFinish",
+          "astId": 191,
+          "type": "t_uint256",
+          "src": "5146:27:2"
+        },
+        {
+          "contract": "BiffysLoveFarm",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLoveFarm.sol",
+          "label": "rewardRate",
+          "astId": 193,
+          "type": "t_uint256",
+          "src": "5180:25:2"
+        },
+        {
+          "contract": "BiffysLoveFarm",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLoveFarm.sol",
+          "label": "lastUpdateTime",
+          "astId": 195,
+          "type": "t_uint256",
+          "src": "5212:29:2"
+        },
+        {
+          "contract": "BiffysLoveFarm",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLoveFarm.sol",
+          "label": "rewardPerTokenStored",
+          "astId": 197,
+          "type": "t_uint256",
+          "src": "5248:35:2"
+        },
+        {
+          "contract": "BiffysLoveFarm",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLoveFarm.sol",
+          "label": "userRewardPerTokenPaid",
+          "astId": 201,
+          "type": "t_mapping<t_uint256>",
+          "src": "5290:57:2"
+        },
+        {
+          "contract": "BiffysLoveFarm",
+          "path": "..\\..\\..\\D\\Mega\\Biffy.ai\\oz-sc\\contracts\\BiffysLoveFarm.sol",
+          "label": "rewards",
+          "astId": 205,
+          "type": "t_mapping<t_uint256>",
+          "src": "5354:42:2"
+        }
+      ],
+      "warnings": {
+        "hasConstructor": false,
+        "hasSelfDestruct": false,
+        "hasDelegateCall": false,
+        "hasInitialValuesInDeclarations": false,
+        "uninitializedBaseContracts": []
+      }
     }
   },
   "solidityLibs": {},
@@ -227,6 +417,15 @@
         "address": "0xf7F35Fe2ede3aDDee7Cf176f4Ef20D9436E498dc",
         "version": "0.1.0",
         "implementation": "0x7207BeeE90A9E00b32D99557a186691D49BB63C8",
+        "admin": "0x673fc56c5ae22FCA60aE0D41B2ba33E774b90d10",
+        "kind": "Upgradeable"
+      }
+    ],
+    "biffy.ai/BiffysLoveFarm": [
+      {
+        "address": "0x1F3032035804369B609ADBF43100C497CD33e1F1",
+        "version": "0.1.0",
+        "implementation": "0x72aca835263584C68254AA313300D77e7DE99918",
         "admin": "0x673fc56c5ae22FCA60aE0D41B2ba33E774b90d10",
         "kind": "Upgradeable"
       }

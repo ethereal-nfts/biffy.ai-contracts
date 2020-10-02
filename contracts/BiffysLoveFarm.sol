@@ -176,7 +176,7 @@ contract BiffysLoveFarm is LPTokenWrapper, Ownable {
         emit Staked(msg.sender, amount);
     }
 
-    function getReward() public updateReward(msg.sender) checkhalve {
+    function getReward() public updateReward(msg.sender) checkhalve checkStart {
         uint256 reward = earned(msg.sender);
         if (reward > 0) {
             rewards[msg.sender] = 0;
