@@ -202,6 +202,13 @@ contract BiffysLoveFarm is LPTokenWrapper, Ownable {
         userRewardPerTokenPaid[account] = _rewardPerToken;
     }
 
+    //Fix incorrect emission rate, from wrong initreward
+    function fixEmissionRate(uint _initReward) external onlyOwner {
+        initreward = _initReward;
+        biffysLove.mint(address(this), initreward.sub(biffysLove.balanceOf(address(this))));
+        rewardRate = initreward.div(periodFinish.sub(now));
+    }
+
     modifier checkhalve() {
         if (block.timestamp >= periodFinish) {
             initreward = initreward.mul(50).div(100);

@@ -220,11 +220,11 @@
       }
     },
     "BiffysLoveFarm": {
-      "address": "0x4101882C5146dC0a62967b2C3601c65301821ffB",
-      "constructorCode": "6080604052611586806100136000396000f3fe",
-      "bodyBytecodeHash": "b437c944ecef3425d19d5641496a66ee2e40411f38097ad275b9cad62fc0d6b4",
-      "localBytecodeHash": "20ef246f77b99cbbdfbf84a6c64ac1a94b1b41fbac71568422dbb173506e0840",
-      "deployedBytecodeHash": "20ef246f77b99cbbdfbf84a6c64ac1a94b1b41fbac71568422dbb173506e0840",
+      "address": "0x98A56c7B03EedB7Acc46308611561622e51eC13a",
+      "constructorCode": "6080604052611745806100136000396000f3fe",
+      "bodyBytecodeHash": "8703f03b47ad333a8328243daf3749a9e8c4231d0a3e542d8ca3bf122c830290",
+      "localBytecodeHash": "59adde4f747dcae5ce86060592b79d31d709a974ba8b0e6c2a67fa75e862211f",
+      "deployedBytecodeHash": "59adde4f747dcae5ce86060592b79d31d709a974ba8b0e6c2a67fa75e862211f",
       "types": {
         "t_bool": {
           "id": "t_bool",
@@ -260,7 +260,7 @@
           "contract": "Initializable",
           "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
           "label": "initialized",
-          "astId": 5265,
+          "astId": 5304,
           "type": "t_bool",
           "src": "757:24:36"
         },
@@ -268,7 +268,7 @@
           "contract": "Initializable",
           "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
           "label": "initializing",
-          "astId": 5267,
+          "astId": 5306,
           "type": "t_bool",
           "src": "876:25:36"
         },
@@ -276,7 +276,7 @@
           "contract": "Initializable",
           "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
           "label": "______gap",
-          "astId": 5329,
+          "astId": 5368,
           "type": "t_array:50<t_uint256>",
           "src": "1982:29:36"
         },
@@ -308,7 +308,7 @@
           "contract": "Ownable",
           "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
           "label": "_owner",
-          "astId": 2718,
+          "astId": 2757,
           "type": "t_address",
           "src": "526:22:19"
         },
@@ -316,7 +316,7 @@
           "contract": "Ownable",
           "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
           "label": "______gap",
-          "astId": 2831,
+          "astId": 2870,
           "type": "t_array:50<t_uint256>",
           "src": "2471:29:19"
         },
@@ -427,7 +427,7 @@
       {
         "address": "0x1F3032035804369B609ADBF43100C497CD33e1F1",
         "version": "0.1.0",
-        "implementation": "0x4101882C5146dC0a62967b2C3601c65301821ffB",
+        "implementation": "0x98A56c7B03EedB7Acc46308611561622e51eC13a",
         "admin": "0x673fc56c5ae22FCA60aE0D41B2ba33E774b90d10",
         "kind": "Upgradeable"
       }
