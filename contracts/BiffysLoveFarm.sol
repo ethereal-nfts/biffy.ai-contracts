@@ -173,6 +173,10 @@ contract BiffysLoveFarm is LPTokenWrapper, Ownable {
     function stake(uint256 amount) public updateReward(msg.sender) checkhalve checkStart {
         require(amount > 0, "Cannot stake 0");
         super.stake(amount);
+        // can happen with first staker in rare occurances
+        if (userRewardPerTokenPaid[msg.sender] == 0) {
+            userRewardPerTokenPaid[msg.sender] = rewardPerToken();
+        }
         emit Staked(msg.sender, amount);
     }
 
@@ -189,6 +193,13 @@ contract BiffysLoveFarm is LPTokenWrapper, Ownable {
     function setInitReward(uint amtLoveWeiPerPeriod) external onlyOwner {
         require(rewardRate == 0, "Must not have yet set the reward rate.");
         initreward = amtLoveWeiPerPeriod;
+    }
+
+    //Fix bug due to bad userRewardPerTokenPaid
+    function fixRewardPerTokenStored(address account, uint _rewardPerToken) external onlyOwner {
+        require(earned(account) > 0, "Must be a staker");
+        require(userRewardPerTokenPaid[account] == 0, "Must have incorrect reward");
+        userRewardPerTokenPaid[account] = _rewardPerToken;
     }
 
     modifier checkhalve() {
