@@ -185,6 +185,12 @@ contract BiffysLoveFarm is LPTokenWrapper, Ownable {
         }
     }
 
+    //admin for setting initreward before launch. Only when checkhalve not yet run
+    function setInitReward(uint amtLoveWeiPerPeriod) external onlyOwner {
+        require(rewardRate == 0, "Must not have yet set the reward rate.");
+        initreward = amtLoveWeiPerPeriod;
+    }
+
     modifier checkhalve() {
         if (block.timestamp >= periodFinish) {
             initreward = initreward.mul(50).div(100);
