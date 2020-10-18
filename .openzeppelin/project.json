@@ -2,7 +2,8 @@
   "manifestVersion": "2.2",
   "contracts": {
     "BiffysLove": "BiffysLove",
-    "BiffysLoveFarm": "BiffysLoveFarm"
+    "BiffysLoveFarm": "BiffysLoveFarm",
+    "BiffysPortraitAuction": "BiffysPortraitAuction"
   },
   "dependencies": {},
   "name": "biffy.ai",
@@ -10,7 +11,13 @@
   "compiler": {
     "manager": "truffle",
     "compilerSettings": {
-      "optimizer": {}
-    }
-  }
+      "optimizer": {
+        "enabled": false,
+        "runs": "200"
+      }
+    },
+    "artifactsDir": "build\\contracts",
+    "contractsDir": "contracts"
+  },
+  "telemetryOptIn": false
 }
