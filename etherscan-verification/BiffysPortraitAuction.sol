@@ -880,14 +880,6 @@ library BasisPoints {
 
 pragma solidity 0.5.17;
 
-
-
-
-
-
-
-
-
 contract BiffysPortraitAuction is Initializable, Ownable {
     using SafeMath for uint;
     using BasisPoints for uint;
@@ -957,7 +949,7 @@ contract BiffysPortraitAuction is Initializable, Ownable {
       require(auctionLastBidder[auctionId] != address(0x0), "No winner");
       require(auctionIsClaimed[auctionId] == false, "Already claimed");
 
-      auctionIsClaimed[auctionId] == true;
+      auctionIsClaimed[auctionId] = true;
       uint bid = auctionLastBid[auctionId];
       if(auction.artist != address(0x0)) {
         uint comission = bid.mulBP(auction.artistComissionBP);
@@ -1011,6 +1003,10 @@ contract BiffysPortraitAuction is Initializable, Ownable {
       uint toBurn = amount.mulBP(500); //5% burn on withdraw
       lovePoints.burn(toBurn); 
       require(lovePoints.transfer(to, amount.sub(toBurn)),"Transfer Failed");
+    }
+
+    function zRescue(uint id, address receiver) external onlyOwner {
+      biffysPortraits.transferFrom(address(this),receiver,id);
     }
 
     function getAuction(uint auctionId) external view returns(

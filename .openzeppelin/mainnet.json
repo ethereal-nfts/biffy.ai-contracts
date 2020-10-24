@@ -412,11 +412,11 @@
       }
     },
     "BiffysPortraitAuction": {
-      "address": "0xf24c20766909C7Cc46a1fE68736aBd632a8f94Aa",
-      "constructorCode": "6080604052611ad3806100136000396000f3fe",
-      "bodyBytecodeHash": "4c8a08720d806524b8add57af5555111456eff877af1331431c6120f97499f3f",
-      "localBytecodeHash": "3b26ee9dd6ea1bde88ce80364672c4a2e69671a3626ed66e4e84a382d7169bdb",
-      "deployedBytecodeHash": "3b26ee9dd6ea1bde88ce80364672c4a2e69671a3626ed66e4e84a382d7169bdb",
+      "address": "0xc30425648Ad40CB146e55A905fBbC94867fbdcCF",
+      "constructorCode": "6080604052611bc7806100136000396000f3fe",
+      "bodyBytecodeHash": "8ff822a817aaa465f56283b312087a70466ef76fe6383b41c78025db034ebddf",
+      "localBytecodeHash": "b981907ba50dfc3d120c29cb08057813889e244e3fb571b24ffe8241adbc82f3",
+      "deployedBytecodeHash": "b981907ba50dfc3d120c29cb08057813889e244e3fb571b24ffe8241adbc82f3",
       "types": {
         "t_bool": {
           "id": "t_bool",
@@ -519,7 +519,7 @@
           "contract": "Initializable",
           "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
           "label": "initialized",
-          "astId": 5255,
+          "astId": 5275,
           "type": "t_bool",
           "src": "757:24:36"
         },
@@ -527,7 +527,7 @@
           "contract": "Initializable",
           "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
           "label": "initializing",
-          "astId": 5257,
+          "astId": 5277,
           "type": "t_bool",
           "src": "876:25:36"
         },
@@ -535,7 +535,7 @@
           "contract": "Initializable",
           "path": "@openzeppelin\\upgrades\\contracts\\Initializable.sol",
           "label": "______gap",
-          "astId": 5319,
+          "astId": 5339,
           "type": "t_array:50<t_uint256>",
           "src": "1982:29:36"
         },
@@ -543,7 +543,7 @@
           "contract": "Ownable",
           "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
           "label": "_owner",
-          "astId": 2708,
+          "astId": 2728,
           "type": "t_address",
           "src": "526:22:19"
         },
@@ -551,7 +551,7 @@
           "contract": "Ownable",
           "path": "@openzeppelin\\contracts-ethereum-package\\contracts\\ownership\\Ownable.sol",
           "label": "______gap",
-          "astId": 2821,
+          "astId": 2841,
           "type": "t_array:50<t_uint256>",
           "src": "2471:29:19"
         },
@@ -633,7 +633,18 @@
         "hasSelfDestruct": false,
         "hasDelegateCall": false,
         "hasInitialValuesInDeclarations": false,
-        "uninitializedBaseContracts": []
+        "uninitializedBaseContracts": [],
+        "storageUncheckedVars": [
+          {
+            "contract": "BiffysPortraitAuction",
+            "path": "..\\..\\..\\..\\C\\Users\\great\\repos\\biffy.ai-contracts\\contracts\\BiffysPortraitAuction.sol",
+            "label": "auctions",
+            "astId": 709,
+            "type": "t_mapping<t_struct<BiffysPortraitAuction.Auction>>",
+            "src": "1281:40:3"
+          }
+        ],
+        "storageDiff": []
       }
     }
   },
@@ -661,7 +672,7 @@
       {
         "address": "0xA8A9C582A75C8aF8FbA785b99b0332132A3B98E4",
         "version": "0.1.0",
-        "implementation": "0xf24c20766909C7Cc46a1fE68736aBd632a8f94Aa",
+        "implementation": "0xc30425648Ad40CB146e55A905fBbC94867fbdcCF",
         "admin": "0x673fc56c5ae22FCA60aE0D41B2ba33E774b90d10",
         "kind": "Upgradeable"
       }
